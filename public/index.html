@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MU EduHub — University of Mumbai | BScIT &amp; CS Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,300&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#06091a;--bg2:#0a0e25;--bg3:#0d1330;
+  --card:#111830;--card2:#162040;--card3:#1a274e;
+  --border:#1e2d5a;--border2:#283870;
+  --accent:#3b82f6;--ag:rgba(59,130,246,.22);
+  --teal:#10b981;--tg:rgba(16,185,129,.18);
+  --amber:#f59e0b;--amg:rgba(245,158,11,.18);
+  --rose:#f43f5e;--rg:rgba(244,63,94,.18);
+  --violet:#8b5cf6;--vg:rgba(139,92,246,.18);
+  --sky:#0ea5e9;--skg:rgba(14,165,233,.18);
+  --text:#dde8ff;--text2:#7b91cc;--text3:#3d4f7a;
+  --r:18px;--rs:10px;--rxs:7px;
+  --sh:0 8px 32px rgba(0,0,0,.5);
+  --tr:all .22s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;opacity:.35;pointer-events:none;z-index:9997;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E")}
+.page{display:none;min-height:100vh;opacity:0;transition:opacity .35s ease}
+.page.active{display:flex;opacity:1}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+
+/* ════════════════════════════ AUTH ════════════════════════════ */
+#auth-page{
+  flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse 90% 60% at 50% -5%,#112060 0%,var(--bg) 65%);
+  padding:24px;position:relative;overflow:hidden;
+}
+.auth-grid{position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:52px 52px;opacity:.1;pointer-events:none;
+  mask-image:radial-gradient(ellipse 80% 75% at 50% 50%,black 20%,transparent 80%)}
+.auth-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(90px)}
+.ao1{width:560px;height:560px;background:radial-gradient(circle,rgba(59,130,246,.16),transparent 70%);top:-200px;left:50%;transform:translateX(-50%)}
+.ao2{width:320px;height:320px;background:radial-gradient(circle,rgba(16,185,129,.1),transparent 70%);bottom:40px;right:-60px}
+.ao3{width:240px;height:240px;background:radial-gradient(circle,rgba(139,92,246,.1),transparent 70%);bottom:80px;left:-40px}
+.auth-wrap{width:100%;max-width:480px;position:relative;z-index:2;animation:fadeUp .55s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.auth-brand{text-align:center;margin-bottom:28px}
+.mu-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(139,92,246,.1));border:1px solid rgba(59,130,246,.25);border-radius:100px;padding:6px 18px 6px 6px;margin-bottom:16px;box-shadow:0 0 28px rgba(59,130,246,.12)}
+.mu-icon{width:28px;height:28px;background:linear-gradient(135deg,var(--accent),var(--violet));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.mu-badge span{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.3px}
+.auth-h1{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;line-height:1.15;margin-bottom:6px}
+.auth-h1 span{background:linear-gradient(90deg,var(--accent),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.auth-sub{font-size:.85rem;color:var(--text2)}
+.auth-card{background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:var(--r);padding:32px 32px 28px;box-shadow:var(--sh),0 0 50px rgba(59,130,246,.06)}
+.auth-tabs{display:flex;background:var(--bg2);border-radius:var(--rs);padding:4px;gap:4px;margin-bottom:26px}
+.a-tab{flex:1;padding:9px;text-align:center;border-radius:6px;cursor:pointer;font-weight:600;font-size:.87rem;color:var(--text2);border:none;background:transparent;transition:var(--tr);font-family:inherit}
+.a-tab.on{background:var(--card3);color:var(--text);box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.a-form{display:none;flex-direction:column;gap:14px;animation:fadeUp .3s ease both}
+.a-form.on{display:flex}
+.fl{font-size:.75rem;font-weight:700;color:var(--text2);letter-spacing:.4px;text-transform:uppercase;margin-bottom:5px;display:block}
+.fi{width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--rs);color:var(--text);font-family:inherit;font-size:.9rem;padding:12px 14px;outline:none;transition:var(--tr)}
+.fi:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--ag)}
+.fi::placeholder{color:var(--text3)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+select.fi{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237b91cc' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+select.fi option{background:var(--card)}
+.btn-p{width:100%;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;border-radius:var(--rs);padding:13px;font-family:inherit;font-size:.93rem;font-weight:700;cursor:pointer;transition:var(--tr);letter-spacing:.2px;box-shadow:0 4px 18px rgba(59,130,246,.3);margin-top:2px}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(59,130,246,.42)}
+.btn-ghost{background:linear-gradient(135deg,var(--card2),var(--card3));box-shadow:none;border:1px solid var(--border2)}
+.divrow{display:flex;align-items:center;gap:10px;margin:2px 0}
+.divrow span{height:1px;flex:1;background:var(--border)}
+.divrow p{font-size:.76rem;color:var(--text3);white-space:nowrap}
+.auth-foot{text-align:center;margin-top:16px;font-size:.8rem;color:var(--text3)}
+.auth-foot a{color:var(--accent);text-decoration:none;font-weight:600}
+.mu-strip{background:linear-gradient(90deg,rgba(59,130,246,.12),rgba(139,92,246,.1));border:1px solid rgba(59,130,246,.2);border-radius:var(--rxs);padding:10px 14px;margin-bottom:20px;font-size:.78rem;color:var(--text2);display:flex;align-items:center;gap:8px}
+.mu-strip strong{color:var(--accent)}
+
+/* ════════════════════════════ NAVBAR ════════════════════════════ */
+.navbar{height:64px;background:rgba(6,9,26,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;box-shadow:0 2px 18px rgba(0,0,0,.35)}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-li{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--violet));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.nav-lt{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem}
+.nav-lt span{color:var(--accent)}
+.nav-mid{display:flex;gap:2px}
+.ni{padding:7px 13px;border-radius:6px;font-size:.82rem;font-weight:500;color:var(--text2);cursor:pointer;border:none;background:transparent;font-family:inherit;transition:var(--tr)}
+.ni:hover,.ni.on{background:var(--card2);color:var(--text)}
+.nav-r{display:flex;align-items:center;gap:10px}
+.nav-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;border:2px solid var(--border2)}
+.nav-un{font-size:.85rem;font-weight:600}
+.nav-out{padding:6px 12px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:inherit;font-size:.8rem;cursor:pointer;transition:var(--tr)}
+.nav-out:hover{border-color:var(--rose);color:var(--rose)}
+
+/* ════════════════════════════ DASHBOARD ════════════════════════════ */
+#dashboard-page{flex-direction:column}
+.dc{flex:1;padding:32px 28px;overflow-y:auto;max-width:1280px;margin:0 auto;width:100%}
+.hero{background:linear-gradient(135deg,var(--card) 0%,var(--card2) 55%,#142060 100%);border:1px solid var(--border);border-radius:var(--r);padding:32px 36px;margin-bottom:30px;position:relative;overflow:hidden;animation:fadeUp .5s ease both}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(59,130,246,.13),transparent 70%);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-80px;right:80px;width:220px;height:220px;background:radial-gradient(circle,rgba(16,185,129,.1),transparent 70%);border-radius:50%}
+.hero-mu{font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+.hero-h{font-family:'Syne',sans-serif;font-size:1.85rem;font-weight:800;line-height:1.2;margin-bottom:8px}
+.hero-h span{background:linear-gradient(90deg,var(--accent),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-p{color:var(--text2);font-size:.9rem;max-width:460px;line-height:1.6;margin-bottom:18px}
+.hero-tags{display:flex;gap:10px;flex-wrap:wrap}
+.htag{display:flex;align-items:center;gap:6px;background:var(--bg2);border:1px solid var(--border);border-radius:100px;padding:5px 12px;font-size:.75rem;font-weight:600;color:var(--text2)}
+.htag .hd{width:6px;height:6px;border-radius:50%}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:30px}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:18px;animation:fadeUp .5s ease both}
+.sc:nth-child(1){animation-delay:.05s}.sc:nth-child(2){animation-delay:.1s}.sc:nth-child(3){animation-delay:.15s}.sc:nth-child(4){animation-delay:.2s}
+.sv{font-family:'Syne',sans-serif;font-size:1.75rem;font-weight:800;line-height:1}
+.sl{font-size:.75rem;color:var(--text2);margin-top:4px}
+.sec-hd{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:18px}
+.sec-hd span{color:var(--accent)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin-bottom:36px}
+.mcard{background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:var(--r);padding:24px;cursor:pointer;transition:var(--tr);position:relative;overflow:hidden;animation:fadeUp .5s ease both}
+.mcard:nth-child(1){animation-delay:.05s}.mcard:nth-child(2){animation-delay:.1s}.mcard:nth-child(3){animation-delay:.15s}.mcard:nth-child(4){animation-delay:.2s}
+.mcard:hover{transform:translateY(-4px);border-color:var(--border2);box-shadow:var(--sh)}
+.mcard::before{content:'';position:absolute;inset:0;border-radius:var(--r);background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.025));pointer-events:none}
+.mg{position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;filter:blur(50px);opacity:.45;pointer-events:none}
+.mn{position:absolute;top:14px;right:14px;font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;opacity:.06}
+.mi{width:48px;height:48px;border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;position:relative;z-index:1}
+.mlb{font-size:.7rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;position:relative;z-index:1}
+.mtt{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;line-height:1.3;margin-bottom:6px;position:relative;z-index:1}
+.md{font-size:.8rem;color:var(--text2);line-height:1.55;margin-bottom:14px;position:relative;z-index:1}
+.ma{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:7px 14px;border-radius:6px;border:none;cursor:pointer;font-family:inherit;transition:var(--tr);position:relative;z-index:1}
+.ma:hover{transform:translateX(3px)}
+.cb .mg{background:var(--accent)}.cb .mi{background:rgba(59,130,246,.14);color:var(--accent)}.cb .mlb{color:var(--accent)}.cb .ma{background:rgba(59,130,246,.14);color:var(--accent)}.cb:hover{box-shadow:0 12px 36px rgba(59,130,246,.14)}
+.ct .mg{background:var(--teal)}.ct .mi{background:rgba(16,185,129,.12);color:var(--teal)}.ct .mlb{color:var(--teal)}.ct .ma{background:rgba(16,185,129,.12);color:var(--teal)}.ct:hover{box-shadow:0 12px 36px rgba(16,185,129,.12)}
+.cam .mg{background:var(--amber)}.cam .mi{background:rgba(245,158,11,.12);color:var(--amber)}.cam .mlb{color:var(--amber)}.cam .ma{background:rgba(245,158,11,.12);color:var(--amber)}.cam:hover{box-shadow:0 12px 36px rgba(245,158,11,.1)}
+.cv .mg{background:var(--violet)}.cv .mi{background:rgba(139,92,246,.12);color:var(--violet)}.cv .mlb{color:var(--violet)}.cv .ma{background:rgba(139,92,246,.12);color:var(--violet)}.cv:hover{box-shadow:0 12px 36px rgba(139,92,246,.1)}
+
+/* ════════════════════════════ MODULE HEADER ════════════════════════════ */
+.mhdr{height:64px;background:rgba(6,9,26,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100}
+.mhl{display:flex;align-items:center;gap:12px}
+.bbk{display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:inherit;font-size:.8rem;cursor:pointer;transition:var(--tr);font-weight:500}
+.bbk:hover{border-color:var(--accent);color:var(--accent)}
+.mhdr-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem}
+.mbadge{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:100px;font-size:.73rem;font-weight:700;border:1px solid}
+
+/* ════════════════════════════ CHATBOT ════════════════════════════ */
+#chatbot-page{flex-direction:column}
+.chat-layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - 64px)}
+.chat-sb{width:270px;min-width:270px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.csec{padding:14px;border-bottom:1px solid var(--border)}
+.csec-t{font-size:.7rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.csel{width:100%;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:.83rem;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%237b91cc' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-color:var(--card)}
+.csel:focus{border-color:var(--accent)}
+.csel option{background:var(--card)}
+.slist{flex:1;overflow-y:auto;padding:6px}
+.sitem{padding:9px 10px;border-radius:6px;cursor:pointer;transition:var(--tr);margin-bottom:2px;display:flex;align-items:flex-start;gap:8px;font-size:.82rem;line-height:1.35}
+.sitem:hover{background:var(--card)}
+.sitem.on{background:linear-gradient(90deg,rgba(59,130,246,.16),rgba(59,130,246,.05));color:var(--accent);border-left:2px solid var(--accent)}
+.sitem-code{font-size:.68rem;color:var(--text3);font-weight:600;margin-top:2px}
+.sitem.on .sitem-code{color:rgba(59,130,246,.7)}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--border2);flex-shrink:0;margin-top:5px}
+.sitem.on .sdot{background:var(--accent)}
+.chat-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.chat-hdr{padding:14px 20px;border-bottom:1px solid var(--border);background:var(--card);display:flex;align-items:center;gap:12px}
+.chi{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(59,130,246,.06));border:1px solid rgba(59,130,246,.25);display:flex;align-items:center;justify-content:center;font-size:17px}
+.chn{font-weight:700;font-size:.92rem}
+.chd{font-size:.75rem;color:var(--text2)}
+.ai-live{display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--teal);font-weight:700;margin-left:auto}
+.ald{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;background:radial-gradient(ellipse 60% 40% at 50% 100%,rgba(59,130,246,.04),transparent 60%)}
+.msg{display:flex;gap:10px;animation:msgIn .28s ease both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg-u{flex-direction:row-reverse}
+.mav{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700}
+.aav{background:linear-gradient(135deg,var(--accent),var(--teal))}
+.uav{background:linear-gradient(135deg,var(--violet),var(--rose))}
+.mb{max-width:72%;padding:12px 15px;border-radius:14px;font-size:.86rem;line-height:1.6}
+.msg-a .mb{background:var(--card2);border:1px solid var(--border);border-bottom-left-radius:4px}
+.msg-u .mb{background:linear-gradient(135deg,rgba(59,130,246,.22),rgba(59,130,246,.12));border:1px solid rgba(59,130,246,.28);border-bottom-right-radius:4px}
+.mc{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:10px;font-family:monospace;font-size:.78rem;white-space:pre-wrap;margin-top:7px;color:var(--teal)}
+.tdots{display:flex;gap:3px;padding:12px 15px;background:var(--card2);border:1px solid var(--border);border-radius:14px;border-bottom-left-radius:4px;width:fit-content}
+.td{width:6px;height:6px;border-radius:50%;background:var(--text3);animation:td 1.2s ease infinite}
+.td:nth-child(2){animation-delay:.15s}.td:nth-child(3){animation-delay:.3s}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-7px);opacity:1}}
+.chat-inp{padding:18px 20px;border-top:1px solid var(--border);background:var(--bg2)}
+.ciw{display:flex;gap:8px;align-items:flex-end;background:var(--card);border:1.5px solid var(--border);border-radius:var(--rs);padding:10px 12px;transition:var(--tr)}
+.ciw:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--ag)}
+.cita{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:inherit;font-size:.88rem;resize:none;max-height:130px;line-height:1.5}
+.cita::placeholder{color:var(--text3)}
+.csend{width:34px;height:34px;border-radius:8px;border:none;flex-shrink:0;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;cursor:pointer;font-size:14px;transition:var(--tr);display:flex;align-items:center;justify-content:center}
+.csend:hover{transform:scale(1.06);box-shadow:0 3px 12px rgba(59,130,246,.4)}
+.hints{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.hp{padding:4px 10px;border-radius:100px;background:var(--card);border:1px solid var(--border);font-size:.72rem;color:var(--text2);cursor:pointer;transition:var(--tr)}
+.hp:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ════════════════════════════ MCQ ════════════════════════════ */
+#mcq-page{flex-direction:column}
+.mcq-lay{flex:1;padding:28px;overflow-y:auto;max-width:1050px;margin:0 auto;width:100%}
+.mcq-ctrl{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:16px 20px;margin-bottom:24px}
+.mcq-cg{display:flex;flex-direction:column;gap:5px;min-width:150px}
+.mcq-cl{font-size:.68rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.mcq-sel{padding:8px 10px;background:var(--bg2);border:1.5px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:.83rem;outline:none;cursor:pointer;appearance:none;min-width:150px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%237b91cc' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;background-color:var(--bg2)}
+.mcq-sel:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--tg)}
+.mcq-sel option{background:var(--card)}
+.btn-sq{margin-left:auto;padding:9px 22px;background:linear-gradient(135deg,var(--teal),#059669);color:#fff;font-family:inherit;font-size:.86rem;font-weight:700;border:none;border-radius:6px;cursor:pointer;transition:var(--tr);white-space:nowrap}
+.btn-sq:hover{transform:translateY(-2px);box-shadow:0 5px 18px rgba(16,185,129,.35)}
+.mcq-prog{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:14px 20px;margin-bottom:18px;display:flex;align-items:center;gap:18px}
+.mpbw{flex:1;height:6px;background:var(--bg2);border-radius:99px;overflow:hidden}
+.mpb{height:100%;background:linear-gradient(90deg,var(--teal),var(--accent));border-radius:99px;transition:width .4s ease}
+.mls{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;white-space:nowrap}
+.mls span{color:var(--teal)}
+.mqc{background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:var(--r);padding:28px;margin-bottom:18px;animation:fadeUp .3s ease both}
+.mqm{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.mqn{font-family:'Syne',sans-serif;font-size:.74rem;font-weight:700;background:rgba(16,185,129,.12);color:var(--teal);padding:3px 10px;border-radius:100px;border:1px solid rgba(16,185,129,.2)}
+.mqs{font-size:.75rem;color:var(--accent);font-weight:600;background:rgba(59,130,246,.1);padding:3px 10px;border-radius:100px}
+.mqcode{font-size:.7rem;color:var(--text3);font-weight:600}
+.mqt{font-size:1rem;font-weight:500;line-height:1.6;margin-bottom:18px}
+.mopts{display:flex;flex-direction:column;gap:9px}
+.mopt{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--rs);cursor:pointer;transition:var(--tr);font-size:.87rem}
+.mopt:hover:not(.dis){border-color:var(--teal);background:rgba(16,185,129,.05)}
+.mopt.sel{border-color:var(--accent);background:rgba(59,130,246,.09)}
+.mopt.cor{border-color:var(--teal);background:rgba(16,185,129,.1);color:var(--teal)}
+.mopt.wrn{border-color:var(--rose);background:rgba(244,63,94,.09);color:var(--rose)}
+.mopt.dis{cursor:default}
+.ol{width:26px;height:26px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;flex-shrink:0}
+.mopt.sel .ol{background:rgba(59,130,246,.28);color:var(--accent)}
+.mopt.cor .ol{background:rgba(16,185,129,.28);color:var(--teal)}
+.mopt.wrn .ol{background:rgba(244,63,94,.28);color:var(--rose)}
+.mcq-exp{margin-top:14px;padding:12px 14px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:var(--rxs);font-size:.82rem;color:var(--teal);line-height:1.55}
+.btn-nx{margin-top:16px;padding:10px 24px;background:var(--card2);border:1px solid var(--border2);color:var(--text);font-family:inherit;font-size:.86rem;font-weight:600;border-radius:6px;cursor:pointer;transition:var(--tr)}
+.btn-nx:hover{border-color:var(--teal);color:var(--teal)}
+.mres{text-align:center;padding:50px 28px;background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:var(--r);animation:fadeUp .45s ease both}
+.btn-rt{padding:11px 28px;background:linear-gradient(135deg,var(--teal),#059669);color:#fff;font-family:inherit;font-size:.88rem;font-weight:700;border:none;border-radius:6px;cursor:pointer;transition:var(--tr)}
+.btn-rt:hover{transform:translateY(-2px);box-shadow:0 5px 18px rgba(16,185,129,.35)}
+
+/* ════════════════════════════ PDF MODULES ════════════════════════════ */
+#syllabus-page,#practical-page{flex-direction:column}
+.pdf-lay{flex:1;padding:28px;overflow-y:auto;max-width:1240px;margin:0 auto;width:100%}
+.pdf-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+.psel{padding:8px 12px;background:var(--card);border:1.5px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:.83rem;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%237b91cc' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-color:var(--card);transition:var(--tr)}
+.psel:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amg)}
+.psel option{background:var(--card)}
+.psch{flex:1;min-width:180px;padding:8px 12px;background:var(--card);border:1.5px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:.83rem;outline:none;transition:var(--tr)}
+.psch:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amg)}
+.psch::placeholder{color:var(--text3)}
+.mu-info{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:12px 16px;margin-bottom:20px;font-size:.8rem;color:var(--text2);display:flex;align-items:center;gap:8px;line-height:1.5}
+.mu-info a{color:var(--accent);font-weight:600}
+.sg{margin-bottom:30px}
+.sgt{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.sp{padding:2px 10px;border-radius:100px;font-size:.7rem;font-weight:700;background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:17px;cursor:pointer;transition:var(--tr);display:flex;flex-direction:column;gap:8px;animation:fadeUp .38s ease both}
+.pcard:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:0 7px 24px rgba(0,0,0,.4)}
+.pci{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.pcn{font-weight:600;font-size:.84rem;line-height:1.32}
+.pcc{font-size:.7rem;color:var(--accent);font-weight:700;font-family:monospace}
+.pcm{font-size:.72rem;color:var(--text3)}
+.pca{display:flex;gap:7px;margin-top:3px}
+.pb{flex:1;padding:6px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:inherit;font-size:.72rem;cursor:pointer;transition:var(--tr);font-weight:600;display:flex;align-items:center;justify-content:center;gap:4px}
+.pb:hover{background:var(--card2);border-color:var(--border2);color:var(--text)}
+.pbv:hover{border-color:var(--amber);color:var(--amber)}
+.pbd:hover{border-color:var(--teal);color:var(--teal)}
+
+/* FULL PDF CARDS */
+.full-pdf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.fpdf-card{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:20px;transition:var(--tr);display:flex;flex-direction:column;gap:10px;animation:fadeUp .4s ease both}
+.fpdf-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.fpdf-icon{font-size:1.8rem}
+.fpdf-year{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.fpdf-name{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;line-height:1.3}
+.fpdf-desc{font-size:.75rem;color:var(--text2);line-height:1.5}
+.fpdf-btns{display:flex;gap:8px;margin-top:4px}
+.fpdf-btn{flex:1;padding:8px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:inherit;font-size:.75rem;font-weight:600;cursor:pointer;transition:var(--tr);text-align:center}
+.fpdf-btn:hover{background:var(--card2);border-color:var(--border2)}
+.fpdf-btn-v:hover,.fpdf-view:hover{border-color:var(--amber);color:var(--amber)}
+.fpdf-btn-d:hover,.fpdf-dl:hover{border-color:var(--teal);color:var(--teal)}
+
+.apikey-bar{display:flex;align-items:center;gap:10px;padding:8px 20px;background:rgba(59,130,246,.08);border-bottom:1px solid rgba(59,130,246,.15);font-size:.78rem}
+.apikey-bar-status{display:flex;align-items:center;gap:6px;font-weight:600}
+.apikey-bar-dot{width:7px;height:7px;border-radius:50%}
+.syl-ctab{padding:9px 22px;border-radius:var(--rs);border:1.5px solid var(--border);background:transparent;color:var(--text2);font-family:inherit;font-size:.86rem;font-weight:600;cursor:pointer;transition:var(--tr)}
+.syl-ctab.on{background:linear-gradient(135deg,var(--card2),var(--card3));color:var(--text);border-color:var(--border2);box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.syl-ctab:hover:not(.on){border-color:var(--border2);color:var(--text)}
+
+/* ════ QUESTION PAPERS ════ */
+.qp-ytab{padding:9px 20px;border-radius:var(--rs);border:1.5px solid var(--border);background:var(--card);color:var(--text2);font-size:.84rem;font-weight:600;cursor:pointer;transition:var(--tr)}
+.qp-ytab:hover{border-color:var(--border2);color:var(--text)}
+.qp-ytab.on.qp-fy{background:rgba(245,158,11,.12);color:var(--amber);border-color:rgba(245,158,11,.3)}
+.qp-ytab.on.qp-sy{background:rgba(16,185,129,.1);color:var(--teal);border-color:rgba(16,185,129,.3)}
+.qp-ytab.on.qp-ty{background:rgba(139,92,246,.1);color:var(--violet);border-color:rgba(139,92,246,.3)}
+.qp-ytab.on{background:rgba(59,130,246,.12);color:var(--accent);border-color:rgba(59,130,246,.3)}
+.qp-sem-block{margin-bottom:32px}
+.qp-sem-hdr{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.qp-pill{padding:2px 12px;border-radius:100px;font-size:.7rem;font-weight:700}
+.qp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:13px}
+.qp-card{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);padding:18px;cursor:default;transition:var(--tr);display:flex;flex-direction:column;gap:9px;animation:fadeUp .38s ease both}
+.qp-card:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:0 7px 22px rgba(0,0,0,.4)}
+.qp-card-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;background:rgba(139,92,246,.12);color:var(--violet)}
+.qp-card-code{font-size:.7rem;color:var(--violet);font-weight:700;font-family:monospace}
+.qp-card-name{font-weight:600;font-size:.84rem;line-height:1.3}
+.qp-card-meta{font-size:.72rem;color:var(--text3)}
+.qp-card-btns{display:flex;gap:7px;margin-top:3px}
+.qp-empty{text-align:center;padding:60px 20px;color:var(--text3)}
+.qp-empty-icon{font-size:3rem;margin-bottom:12px}
+.qp-empty-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text2);margin-bottom:8px}
+.qp-empty-sub{font-size:.83rem;line-height:1.6;max-width:340px;margin:0 auto}
+.qp-subject-card{background:var(--card);border:1px solid var(--border);border-radius:var(--rs);overflow:hidden;transition:var(--tr);animation:fadeUp .35s ease both}
+.qp-subject-card:hover{border-color:var(--border2);box-shadow:0 6px 22px rgba(0,0,0,.4)}
+.qp-subj-hdr{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--card2)}
+.qp-subj-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.qp-subj-info{flex:1;min-width:0}
+.qp-subj-code{font-size:.7rem;font-weight:700;font-family:monospace;color:var(--accent);margin-bottom:2px}
+.qp-subj-name{font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qp-subj-count{font-size:.72rem;font-weight:700;white-space:nowrap;opacity:.85}
+.qp-papers-list{display:flex;flex-direction:column}
+.qp-paper-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid var(--border);transition:var(--tr);gap:12px;flex-wrap:wrap}
+.qp-paper-row:last-child{border-bottom:none}
+.qp-paper-row:hover{background:var(--bg2)}
+.qp-row-empty{opacity:.55}
+.qp-paper-yr{display:flex;align-items:center;gap:8px;font-size:.82rem}
+.qp-yr-badge{padding:2px 10px;border-radius:100px;font-size:.72rem;font-weight:700;border:1px solid var(--border);background:var(--bg2);color:var(--text2)}
+.qp-exam-lbl{font-size:.75rem;color:var(--text2)}
+.qp-paper-btns{display:flex;gap:7px}
+.qp-pbtn{padding:5px 13px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-family:inherit;font-size:.74rem;font-weight:600;cursor:pointer;transition:var(--tr)}
+.qp-pbtn-v:hover{border-color:var(--amber);color:var(--amber);background:rgba(245,158,11,.07)}
+.qp-pbtn-d:hover{border-color:var(--teal);color:var(--teal);background:rgba(16,185,129,.07)}
+.qp-not-added{font-size:.72rem;color:var(--text3);font-style:italic}
+.hidden{display:none!important}
+@media(max-width:900px){.chat-sb{width:220px;min-width:220px}.dc{padding:22px 16px}.mcq-lay,.pdf-lay{padding:20px 16px}}
+@media(max-width:660px){.chat-sb{display:none}.frow{grid-template-columns:1fr}.nav-mid{display:none}.hero-h{font-size:1.4rem}.mgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- AUTH PAGE -->
+<div id="auth-page" class="page active">
+  <div class="auth-grid"></div>
+  <div class="auth-orb ao1"></div><div class="auth-orb ao2"></div><div class="auth-orb ao3"></div>
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <div class="mu-badge">
+        <div class="mu-icon">🎓</div>
+        <span>University of Mumbai</span>
+      </div>
+      <div class="auth-h1">MU Edu<span>Hub</span></div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:600;color:var(--text2);margin-top:4px">BScIT &amp; BSc CS Student Portal</div>
+      <div class="auth-sub" style="margin-top:6px">Powered by the official Mumbai University curriculum</div>
+    </div>
+    <div class="auth-card">
+      <div class="mu-strip">🏛️ <strong>University of Mumbai</strong> &nbsp;·&nbsp; BScIT | BSc CS &nbsp;·&nbsp; All 6 Semesters Covered</div>
+      <div class="auth-tabs">
+        <button class="a-tab on" onclick="swTab('login')">Sign In</button>
+        <button class="a-tab" onclick="swTab('register')">Register</button>
+      </div>
+      <form class="a-form on" id="lf" onsubmit="doLogin(event)">
+        <div><label class="fl">Email Address</label><input type="email" class="fi" id="le" placeholder="student@mu.ac.in" required/></div>
+        <div><label class="fl">Password</label><input type="password" class="fi" id="lp" placeholder="Enter your password" required/></div>
+        <button type="submit" class="btn-p">Sign In to Portal →</button>
+        <div class="divrow"><span></span><p>or continue with demo</p><span></span></div>
+        <button type="button" class="btn-p btn-ghost" onclick="demo()">🚀 Demo Student Access</button>
+      </form>
+      <form class="a-form" id="rf" onsubmit="doReg(event)">
+        <div class="frow">
+          <div><label class="fl">First Name</label><input type="text" class="fi" id="rfn" placeholder="Rahul" required/></div>
+          <div><label class="fl">Last Name</label><input type="text" class="fi" placeholder="Sharma" required/></div>
+        </div>
+        <div><label class="fl">Email Address</label><input type="email" class="fi" placeholder="you@college.edu" required/></div>
+        <div><label class="fl">Mobile Number</label><input type="tel" class="fi" placeholder="+91 98765 43210" required/></div>
+        <div class="frow">
+          <div><label class="fl">Course</label>
+            <select class="fi" required>
+              <option value="">Select Course</option>
+              <option>BScIT</option><option>BSc CS</option><option>BCA</option><option>MScIT</option>
+            </select>
+          </div>
+          <div><label class="fl">Semester</label>
+            <select class="fi" required>
+              <option value="">Semester</option>
+              <option>Sem 1 (FY)</option><option>Sem 2 (FY)</option>
+              <option>Sem 3 (SY)</option><option>Sem 4 (SY)</option>
+              <option>Sem 5 (TY)</option><option>Sem 6 (TY)</option>
+            </select>
+          </div>
+        </div>
+        <div><label class="fl">College Name</label><input type="text" class="fi" placeholder="e.g. Vidyalankar Institute of Technology" required/></div>
+        <div><label class="fl">Create Password</label><input type="password" class="fi" placeholder="Min. 6 characters" required/></div>
+        <button type="submit" class="btn-p">Create Account →</button>
+      </form>
+    </div>
+    <div class="auth-foot">For University of Mumbai students &nbsp;·&nbsp; <a href="https://mu.ac.in" target="_blank">mu.ac.in</a></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard-page" class="page" style="flex-direction:column">
+  <nav class="navbar">
+    <div class="nav-logo">
+      <div class="nav-li">🎓</div>
+      <div class="nav-lt">MU Edu<span>Hub</span></div>
+    </div>
+    <div class="nav-mid">
+      <button class="ni on" onclick="sp('dashboard-page')">🏠 Dashboard</button>
+      <button class="ni" onclick="sp('chatbot-page')">🤖 AI Tutor</button>
+      <button class="ni" onclick="sp('mcq-page')">📝 MCQ Test</button>
+      <button class="ni" onclick="sp('syllabus-page')">📚 Syllabus</button>
+      <button class="ni" onclick="sp('qpaper-page')">📋 Question Papers</button>
+    </div>
+    <div class="nav-r">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="nav-av" id="nav-av">S</div>
+        <div class="nav-un" id="nav-un">Student</div>
+      </div>
+      <button class="nav-out" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+  <div class="dc">
+    <div class="hero">
+      <div class="hero-mu">🏛️ University of Mumbai — Official Curriculum Portal</div>
+      <div class="hero-h">Welcome back, <span id="hn">Student</span>!</div>
+      <div class="hero-p">Access your complete BScIT &amp; BSc CS syllabus, practice MCQs, and AI tutoring — all aligned to the University of Mumbai's official curriculum.</div>
+      <div class="hero-tags">
+        <div class="htag"><div class="hd" style="background:var(--teal)"></div>MU Official Syllabus</div>
+        <div class="htag"><div class="hd" style="background:var(--accent)"></div>BScIT | BSc CS</div>
+        <div class="htag"><div class="hd" style="background:var(--amber)"></div>CBCS / NEP 2020</div>
+        <div class="htag"><div class="hd" style="background:var(--violet)"></div>4 Learning Modules</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sv" style="color:var(--accent)">6</div><div class="sl">Semesters (FY→TY)</div></div>
+      <div class="sc"><div class="sv" style="color:var(--teal)">60+</div><div class="sl">MU Subjects</div></div>
+      <div class="sc"><div class="sv" style="color:var(--amber)">600+</div><div class="sl">MCQ Questions</div></div>
+      <div class="sc"><div class="sv" style="color:var(--violet)">36+</div><div class="sl">Question Papers</div></div>
+    </div>
+    <div class="sec-hd">Learning <span>Modules</span></div>
+    <div class="mgrid">
+      <div class="mcard cb" onclick="sp('chatbot-page')">
+        <div class="mg"></div><div class="mn">01</div>
+        <div class="mi">🤖</div>
+        <div class="mlb">AI Powered</div>
+        <div class="mtt">Personal Subject Instructor</div>
+        <div class="md">Chat with an AI tutor for every MU subject across all 6 semesters. Get instant explanations, doubt solving, and exam prep.</div>
+        <button class="ma">Open AI Tutor ➜</button>
+      </div>
+      <div class="mcard ct" onclick="sp('mcq-page')">
+        <div class="mg"></div><div class="mn">02</div>
+        <div class="mi">📝</div>
+        <div class="mlb">Knowledge Test</div>
+        <div class="mtt">MCQ Practice Exams</div>
+        <div class="md">MU-pattern MCQs for every subject. Instant scoring, feedback and explanations to ace your university exams.</div>
+        <button class="ma">Start Practice ➜</button>
+      </div>
+      <div class="mcard cam" onclick="sp('syllabus-page')">
+        <div class="mg"></div><div class="mn">03</div>
+        <div class="mi">📚</div>
+        <div class="mlb">Theory Syllabus</div>
+        <div class="mtt">Official MU Syllabus PDFs</div>
+        <div class="md">All theory subject syllabus PDFs as per University of Mumbai (CBCS/NEP). Semester-wise, with course codes.</div>
+        <button class="ma">Browse Syllabus ➜</button>
+      </div>
+      <div class="mcard cv" onclick="sp('qpaper-page')">
+        <div class="mg"></div><div class="mn">04</div>
+        <div class="mi">📋</div>
+        <div class="mlb">Question Papers</div>
+        <div class="mtt">Previous Year Question Papers</div>
+        <div class="md">University of Mumbai past exam papers — semester-wise, subject-wise. Upload &amp; browse PDFs for FY, SY, TY.</div>
+        <button class="ma">Browse Papers ➜</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- API KEY MODAL -->
+
+
+<!-- CHATBOT PAGE -->
+<div id="chatbot-page" class="page" style="flex-direction:column">
+  <div class="mhdr">
+    <div class="mhl">
+      <button class="bbk" onclick="sp('dashboard-page')">← Back</button>
+      <div class="mhdr-title">🤖 AI Subject Instructor — University of Mumbai</div>
+    </div>
+    <div class="mbadge" style="color:var(--accent);border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.08)">✦ Claude AI</div>
+  </div>
+  <div class="apikey-bar" id="apikey-bar">
+    <div class="apikey-bar-status" id="apikey-status">
+      <div class="apikey-bar-dot" style="background:var(--teal)"></div>
+      <span style="color:var(--teal)">AI Active — Claude AI Connected ✓</span>
+    </div>
+    <span style="margin-left:auto;font-size:.72rem;color:var(--text3)">20 questions/hour · MU Syllabus only</span>
+  </div>
+  <div class="chat-layout">
+    <div class="chat-sb">
+      <div class="csec">
+        <div class="csec-t">Course</div>
+        <select class="csel" id="course-sel" onchange="updSubj()">
+          <option value="bscit">BScIT</option>
+          <option value="bsccs">BSc CS</option>
+        </select>
+      </div>
+      <div class="csec">
+        <div class="csec-t">Semester</div>
+        <select class="csel" id="sem-sel" onchange="updSubj()">
+          <option value="1">Semester 1 (FY)</option>
+          <option value="2">Semester 2 (FY)</option>
+          <option value="3">Semester 3 (SY)</option>
+          <option value="4">Semester 4 (SY)</option>
+          <option value="5">Semester 5 (TY)</option>
+          <option value="6">Semester 6 (TY)</option>
+        </select>
+      </div>
+      <div class="csec" style="border-bottom:none;padding-bottom:4px"><div class="csec-t">Subjects</div></div>
+      <div class="slist" id="slist"></div>
+    </div>
+    <div class="chat-main">
+      <div class="chat-hdr">
+        <div class="chi" id="chicon">📘</div>
+        <div>
+          <div class="chn" id="chname">Select a Subject</div>
+          <div class="chd" id="chdesc">Choose from the sidebar to start</div>
+        </div>
+        <div class="ai-live"><div class="ald"></div>AI Online</div>
+      </div>
+      <div class="msgs" id="msgs">
+        <div class="msg msg-a">
+          <div class="mav aav">🤖</div>
+          <div class="mb"><strong>Hello! I'm your MU AI Subject Instructor 👋</strong><br><br>I'm trained on the University of Mumbai BScIT &amp; BSc CS curriculum. Select any subject from the sidebar and I'll become your personal tutor for that topic!<br><br>I can help with concept explanations, solved examples, exam preparation, unit-wise notes, and important questions.</div>
+        </div>
+      </div>
+      <div class="chat-inp">
+        <div class="ciw">
+          <textarea class="cita" id="cinp" rows="1" placeholder="Ask anything about your MU subject..." onkeydown="chatKey(event)"></textarea>
+          <button class="csend" onclick="sendMsg()">➤</button>
+        </div>
+        <div class="hints">
+          <div class="hp" onclick="uHint(this)">Explain Unit 1</div>
+          <div class="hp" onclick="uHint(this)">Important exam questions</div>
+          <div class="hp" onclick="uHint(this)">Solve an example problem</div>
+          <div class="hp" onclick="uHint(this)">Quick revision notes</div>
+          <div class="hp" onclick="uHint(this)">Previous year questions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MCQ PAGE -->
+<div id="mcq-page" class="page" style="flex-direction:column">
+  <div class="mhdr">
+    <div class="mhl">
+      <button class="bbk" onclick="sp('dashboard-page')">← Back</button>
+      <div class="mhdr-title">📝 MCQ Practice — University of Mumbai Pattern</div>
+    </div>
+    <div class="mbadge" style="color:var(--teal);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.08)">600+ Questions</div>
+  </div>
+  <div class="mcq-lay">
+    <div class="mcq-ctrl" id="mcq-ctrl">
+      <div class="mcq-cg">
+        <div class="mcq-cl">Course</div>
+        <select class="mcq-sel" id="mcq-course" onchange="mcqUpdSubj()">
+          <option value="bscit">BScIT</option><option value="bsccs">BSc CS</option>
+        </select>
+      </div>
+      <div class="mcq-cg">
+        <div class="mcq-cl">Semester</div>
+        <select class="mcq-sel" id="mcq-sem" onchange="mcqUpdSubj()">
+          <option value="1">Sem 1 (FY)</option><option value="2">Sem 2 (FY)</option>
+          <option value="3">Sem 3 (SY)</option><option value="4">Sem 4 (SY)</option>
+          <option value="5">Sem 5 (TY)</option><option value="6">Sem 6 (TY)</option>
+        </select>
+      </div>
+      <div class="mcq-cg">
+        <div class="mcq-cl">Subject</div>
+        <select class="mcq-sel" id="mcq-subj"><option>All Subjects</option></select>
+      </div>
+      <div class="mcq-cg">
+        <div class="mcq-cl">Questions</div>
+        <select class="mcq-sel" id="mcq-cnt">
+          <option value="5">5 Qs</option><option value="10" selected>10 Qs</option>
+          <option value="20">20 Qs</option><option value="30">30 Qs</option>
+        </select>
+      </div>
+      <button class="btn-sq" onclick="startQ()">▶ Start Quiz</button>
+    </div>
+    <div class="mcq-prog hidden" id="mcq-prog">
+      <span style="font-size:.8rem;color:var(--text2);white-space:nowrap" id="mp-lbl">Q 1 of 10</span>
+      <div class="mpbw"><div class="mpb" id="mp-bar" style="width:0%"></div></div>
+      <div class="mls">Score: <span id="ml-score">0</span></div>
+    </div>
+    <div id="quiz-area"></div>
+  </div>
+</div>
+
+<!-- ══════════ SYLLABUS PAGE — Year Cards REMOVED ══════════ -->
+<div id="syllabus-page" class="page" style="flex-direction:column">
+  <div class="mhdr">
+    <div class="mhl">
+      <button class="bbk" onclick="sp('dashboard-page')">← Back</button>
+      <div class="mhdr-title">📚 Theory Syllabus — University of Mumbai</div>
+    </div>
+    <div class="mbadge" style="color:var(--amber);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.08)">Official PDFs</div>
+  </div>
+
+  <div id="syl-home" style="flex:1;overflow-y:auto;padding:32px 28px;max-width:1100px;margin:0 auto;width:100%">
+
+    <div class="mu-info" style="margin-bottom:24px">
+      🏛️ Official <strong style="color:var(--accent)">University of Mumbai</strong> Theory Syllabus — BScIT &amp; BSc CS (CBCS / NEP 2020).
+      &nbsp;<a href="https://mu.ac.in/syllabi" target="_blank">Visit mu.ac.in ↗</a>
+    </div>
+
+    <!-- Course toggle -->
+    <div style="display:flex;gap:8px;margin-bottom:30px">
+      <button class="syl-ctab on" id="syl-tab-bscit" onclick="sylSetCourse('bscit')">📘 BScIT</button>
+      <button class="syl-ctab"    id="syl-tab-bsccs" onclick="sylSetCourse('bsccs')">💻 BSc CS</button>
+    </div>
+
+    <!-- Complete Year PDF download strip — directly visible -->
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:14px">📥 Download Complete Year Syllabus PDF</div>
+      <div id="full-pdf-grid" class="full-pdf-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTION PAPERS PAGE -->
+<div id="qpaper-page" class="page" style="flex-direction:column">
+  <div class="mhdr">
+    <div class="mhl">
+      <button class="bbk" onclick="sp('dashboard-page')">← Back</button>
+      <div class="mhdr-title">📋 Previous Year Question Papers — University of Mumbai</div>
+    </div>
+    <div class="mbadge" style="color:var(--violet);border-color:rgba(139,92,246,.3);background:rgba(139,92,246,.08)">MU Exam Papers</div>
+  </div>
+  <div class="pdf-lay" style="max-width:1200px">
+    <div class="mu-info" style="background:rgba(139,92,246,.07);border-color:rgba(139,92,246,.25);margin-bottom:24px">
+      📋 University of Mumbai Previous Year Question Papers — BScIT &amp; BSc CS. Upload your PDFs to make them available here.
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:28px">
+      <select class="psel" id="qp-course" onchange="renderQP()">
+        <option value="bscit">BScIT</option>
+        <option value="bsccs">BSc CS</option>
+      </select>
+      <select class="psel" id="qp-year" onchange="renderQP()">
+        <option value="all">All Years (FY / SY / TY)</option>
+        <option value="fy">First Year (FY) — Sem 1 &amp; 2</option>
+        <option value="sy">Second Year (SY) — Sem 3 &amp; 4</option>
+        <option value="ty">Third Year (TY) — Sem 5 &amp; 6</option>
+      </select>
+      <select class="psel" id="qp-sem" onchange="renderQP()">
+        <option value="all">All Semesters</option>
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+        <option value="3">Semester 3</option>
+        <option value="4">Semester 4</option>
+        <option value="5">Semester 5</option>
+        <option value="6">Semester 6</option>
+      </select>
+      <input type="text" class="psch" id="qp-src" placeholder="🔍 Search subject or code..." oninput="renderQP()" style="flex:1;min-width:180px"/>
+    </div>
+    <div style="display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap">
+      <div class="qp-ytab qp-fy on" id="qyt-all" onclick="qpSetYear('all')">📚 All Papers</div>
+      <div class="qp-ytab qp-fy" id="qyt-fy" onclick="qpSetYear('fy')">🎯 FY Papers</div>
+      <div class="qp-ytab qp-sy" id="qyt-sy" onclick="qpSetYear('sy')">📗 SY Papers</div>
+      <div class="qp-ytab qp-ty" id="qyt-ty" onclick="qpSetYear('ty')">🏆 TY Papers</div>
+    </div>
+    <div id="qp-container"></div>
+  </div>
+</div>
+
+<script>
+// ══ MU DATA ══
+const BSCIT = {
+  1:[
+    {code:"USIT101",name:"Programming Principles with C",icon:"💻",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-I-Syllabus.pdf"},
+    {code:"USIT102",name:"Digital Logic and Applications",icon:"⚡",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-I-Syllabus.pdf"},
+    {code:"USIT103",name:"Fundamentals of Database Management Systems",icon:"🗄️",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-I-Syllabus.pdf"},
+    {code:"USIT104",name:"Computational Logic and Discrete Structure",icon:"🔢",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-I-Syllabus.pdf"},
+    {code:"USIT105",name:"Communication Skills",icon:"💬",type:"Ability Enhancement",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-I-Syllabus.pdf"},
+  ],
+  2:[
+    {code:"USIT201",name:"Fundamentals of Microprocessors & Microcontrollers",icon:"🔧",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-II-Syllabus.pdf"},
+    {code:"USIT202",name:"Web Applications Development",icon:"🌐",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-II-Syllabus.pdf"},
+    {code:"USIT203",name:"Numerical Methods",icon:"📐",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-II-Syllabus.pdf"},
+    {code:"USIT204",name:"Object Oriented Programming",icon:"🔷",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-II-Syllabus.pdf"},
+    {code:"USIT205",name:"Green Computing",icon:"🌿",type:"Value Added",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2024/04/BScIT-Sem-II-Syllabus.pdf"},
+  ],
+  3:[
+    {code:"USIT301",name:"Python Programming",icon:"🐍",type:"Skill Enhancement",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+    {code:"USIT302",name:"Data Structures",icon:"🌳",type:"Core",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+    {code:"USIT303",name:"Computer Networks",icon:"🌐",type:"Core",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+    {code:"USIT304",name:"Database Management Systems",icon:"🗄️",type:"Core",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+    {code:"USIT305",name:"Applied Mathematics",icon:"📊",type:"Core",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+    {code:"USIT306",name:"Operating Systems",icon:"⚙️",type:"Core",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+  ],
+  4:[
+    {code:"USIT401",name:"Core Java",icon:"☕",type:"Skill Enhancement",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+    {code:"USIT402",name:"Introduction to Embedded Systems",icon:"🔌",type:"Core",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+    {code:"USIT403",name:"Computer Oriented Statistical Techniques",icon:"📉",type:"Core",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+    {code:"USIT404",name:"Software Engineering",icon:"🛠️",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2022/03/USIT-404-Software-Engineering.pdf"},
+    {code:"USIT405",name:"Computer Graphics and Animation",icon:"🎨",type:"Core",credits:2,pdf:"https://old.mu.ac.in/wp-content/uploads/2016/06/4.233-S.Y.B.Sc_.-Information-Technology.pdf"},
+  ],
+  5:[
+    {code:"USIT501",name:"Software Project Management",icon:"📋",type:"Core",credits:2,pdf:"https://mu.ac.in/distance-open-learning/b-sc-it-semester-pattern-study-material"},
+    {code:"USIT502",name:"Internet of Things (IoT)",icon:"📡",type:"Core",credits:2,pdf:"https://mu.ac.in/distance-open-learning/b-sc-it-semester-pattern-study-material"},
+    {code:"USIT503",name:"Artificial Intelligence",icon:"🤖",type:"Core",credits:2,pdf:"https://mu.ac.in/distance-open-learning/b-sc-it-semester-pattern-study-material"},
+    {code:"USIT504",name:"Advanced Web Programming",icon:"🌐",type:"Core",credits:2,pdf:"https://mu.ac.in/distance-open-learning/b-sc-it-semester-pattern-study-material"},
+    {code:"USIT505",name:"Linux System Administration",icon:"🐧",type:"Core",credits:2,pdf:"https://mu.ac.in/distance-open-learning/b-sc-it-semester-pattern-study-material"},
+    {code:"USIT506",name:"Enterprise Java",icon:"☕",type:"Core",credits:2,pdf:"https://mu.ac.in/distance-open-learning/b-sc-it-semester-pattern-study-material"},
+    {code:"USIT507",name:"Next Generation Technologies",icon:"🚀",type:"Core",credits:2,pdf:"https://mu.ac.in/distance-open-learning/b-sc-it-semester-pattern-study-material"},
+  ],
+  6:[
+    {code:"USIT601",name:"Software Quality Assurance",icon:"✅",type:"Core",credits:2,pdf:"https://www.vidyalankar.org/bscit/assets/docs/tybscit-sem-vi-syllabus.pdf"},
+    {code:"USIT602",name:"Business Intelligence",icon:"📊",type:"Core",credits:2,pdf:"https://www.vidyalankar.org/bscit/assets/docs/tybscit-sem-vi-syllabus.pdf"},
+    {code:"USIT603",name:"Cyber Laws and IT Security",icon:"⚖️",type:"Core",credits:2,pdf:"https://www.vidyalankar.org/bscit/assets/docs/tybscit-sem-vi-syllabus.pdf"},
+    {code:"USIT604",name:"IT Service Management (ITSM)",icon:"🔧",type:"Core",credits:2,pdf:"https://www.vidyalankar.org/bscit/assets/docs/tybscit-sem-vi-syllabus.pdf"},
+    {code:"USIT605",name:"Security in Computing",icon:"🛡️",type:"Core",credits:2,pdf:"https://www.vidyalankar.org/bscit/assets/docs/tybscit-sem-vi-syllabus.pdf"},
+    {code:"USIT606",name:"Project (Dissertation)",icon:"🎓",type:"Compulsory",credits:4,pdf:"https://www.vidyalankar.org/bscit/assets/docs/tybscit-sem-vi-syllabus.pdf"},
+  ]
+};
+const BSCCS = {
+  1:[
+    {code:"USCS101",name:"Programming with C",icon:"💻",type:"Core",credits:3,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/1.-F.Y.B.Sc.Computer-Science-CBCS-Syllabus-Semester-I-and-II.pdf"},
+    {code:"USCS102",name:"Digital Electronics",icon:"⚡",type:"Core",credits:3,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/1.-F.Y.B.Sc.Computer-Science-CBCS-Syllabus-Semester-I-and-II.pdf"},
+    {code:"USCS103",name:"Discrete Mathematics",icon:"🔢",type:"Core",credits:3,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/1.-F.Y.B.Sc.Computer-Science-CBCS-Syllabus-Semester-I-and-II.pdf"},
+    {code:"USCS104",name:"Mathematics I",icon:"📐",type:"Core",credits:3,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/1.-F.Y.B.Sc.Computer-Science-CBCS-Syllabus-Semester-I-and-II.pdf"},
+  ],
+  2:[
+    {code:"USCS201",name:"Object Oriented Programming with C++",icon:"🔷",type:"Core",credits:3,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/1.-F.Y.B.Sc.Computer-Science-CBCS-Syllabus-Semester-I-and-II.pdf"},
+    {code:"USCS202",name:"Mathematics II",icon:"📐",type:"Core",credits:3,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/1.-F.Y.B.Sc.Computer-Science-CBCS-Syllabus-Semester-I-and-II.pdf"},
+    {code:"USCS203",name:"Web Technology",icon:"🌐",type:"Core",credits:3,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/1.-F.Y.B.Sc.Computer-Science-CBCS-Syllabus-Semester-I-and-II.pdf"},
+    {code:"USCS204",name:"Microprocessors & Assembly Language",icon:"🔧",type:"Core",credits:3,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/1.-F.Y.B.Sc.Computer-Science-CBCS-Syllabus-Semester-I-and-II.pdf"},
+  ],
+  3:[
+    {code:"USCS301",name:"Data Structures (C/C++)",icon:"🌳",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+    {code:"USCS302",name:"Computer Networks",icon:"🌐",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+    {code:"USCS303",name:"Database Management Systems",icon:"🗄️",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+    {code:"USCS304",name:"Discrete Mathematics",icon:"🔢",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+    {code:"USCS305",name:"Python Programming",icon:"🐍",type:"Skill Enhancement",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+  ],
+  4:[
+    {code:"USCS401",name:"Advanced C++ & Java",icon:"☕",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+    {code:"USCS402",name:"Computer Graphics I",icon:"🎨",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+    {code:"USCS403",name:"Software Engineering",icon:"🛠️",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+    {code:"USCS404",name:"Theory of Computation",icon:"📖",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+    {code:"USCS405",name:"Operations Research",icon:"📊",type:"Core",credits:2,pdf:"https://mu.ac.in/wp-content/uploads/2021/10/SYBSC-CS-Sem-III-IV-Syllabus.pdf"},
+  ],
+  5:[
+    {code:"USCS501",name:"Artificial Intelligence",icon:"🤖",type:"Core",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS502",name:"Information and Network Security",icon:"🔐",type:"Core",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS503",name:"Machine Learning",icon:"🧠",type:"Skill Enhancement",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS504",name:"Mobile Computing",icon:"📱",type:"Skill Enhancement",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS505",name:"Research Methodology",icon:"📋",type:"Ability Enhancement",credits:2,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+  ],
+  6:[
+    {code:"USCS601",name:"Data Science",icon:"📊",type:"Core",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS602",name:"Cloud Computing and Web Services",icon:"☁️",type:"Core",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS603",name:"Data Mining & Warehousing",icon:"⛏️",type:"Skill Enhancement",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS604",name:"Wireless and Sensor Networks",icon:"📡",type:"Skill Enhancement",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS605",name:"Ethical Hacking",icon:"🛡️",type:"Skill Enhancement",credits:3,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+    {code:"USCS606",name:"Project (Dissertation)",icon:"🎓",type:"Compulsory",credits:6,pdf:"https://studylib.net/doc/26301062/mu-tybsc-cs-syllabus-2023"},
+  ]
+};
+
+// MCQ Bank
+const MCQ = {
+  "Programming Principles with C":[
+    {q:"Which of the following is a correct syntax to declare a pointer in C?",opts:["int *p;","int &p;","pointer int p;","int ^p;"],ans:0,exp:"int *p; declares p as a pointer to int."},
+    {q:"What is the output of: printf(\"%d\", sizeof(int));",opts:["2","4","8","Depends on compiler"],ans:3,exp:"The size of int is implementation/compiler-dependent (typically 4 bytes on 32/64-bit)."},
+    {q:"Which header file is used for standard input/output in C?",opts:["stdlib.h","conio.h","stdio.h","string.h"],ans:2,exp:"stdio.h (Standard I/O) provides printf, scanf, etc."},
+    {q:"What does the 'break' statement do in a loop?",opts:["Skips the current iteration","Exits the loop","Restarts the loop","Causes a syntax error"],ans:1,exp:"break terminates the nearest enclosing loop or switch."},
+    {q:"Which storage class retains the value of a variable between function calls?",opts:["auto","register","extern","static"],ans:3,exp:"static variables retain their value between calls."},
+  ],
+  "Python Programming":[
+    {q:"Which Python keyword is used to create a function?",opts:["func","function","def","define"],ans:2,exp:"'def' is used to define a function in Python."},
+    {q:"What is the output of: print(type([]))?",opts:["<class 'tuple'>","<class 'list'>","<class 'array'>","<class 'set'>"],ans:1,exp:"[] creates a list, so type([]) returns <class 'list'>."},
+    {q:"Which of these is IMMUTABLE in Python?",opts:["List","Dictionary","Tuple","Set"],ans:2,exp:"Tuples are immutable — they cannot be changed after creation."},
+    {q:"What does len('Mumbai') return?",opts:["5","6","7","Error"],ans:1,exp:"'Mumbai' has 6 characters."},
+    {q:"Which operator is used for floor division in Python?",opts:["/","//","%","**"],ans:1,exp:"// performs floor division in Python."},
+    {q:"What is the correct way to open a file for reading in Python?",opts:["open('f','w')","open('f','r')","open('f','a')","open('f','x')"],ans:1,exp:"'r' mode opens a file for reading."},
+  ],
+  "Data Structures":[
+    {q:"Which data structure follows LIFO principle?",opts:["Queue","Stack","Linked List","Tree"],ans:1,exp:"Stack follows Last In First Out (LIFO)."},
+    {q:"Time complexity of Binary Search is:",opts:["O(n)","O(n log n)","O(log n)","O(1)"],ans:2,exp:"Binary Search repeatedly halves the search space — O(log n)."},
+    {q:"Which traversal visits: Left → Root → Right?",opts:["Preorder","Inorder","Postorder","Level-order"],ans:1,exp:"Inorder traversal is Left-Root-Right."},
+    {q:"The height of a complete binary tree with n nodes is:",opts:["O(n)","O(log n)","O(n²)","O(1)"],ans:1,exp:"Height = floor(log₂n), which is O(log n)."},
+    {q:"Which data structure is ideal for BFS traversal of a graph?",opts:["Stack","Queue","Priority Queue","Hash Map"],ans:1,exp:"BFS uses a Queue (FIFO) to visit nodes level by level."},
+    {q:"In a circular linked list, the last node points to:",opts:["NULL","Itself","The first node","The previous node"],ans:2,exp:"In a circular linked list, the last node's next pointer points back to the first node."},
+  ],
+  "Computer Networks":[
+    {q:"HTTP operates at which OSI layer?",opts:["Transport","Network","Application","Data Link"],ans:2,exp:"HTTP is an Application layer (Layer 7) protocol."},
+    {q:"IPv4 address is how many bits long?",opts:["16 bits","32 bits","64 bits","128 bits"],ans:1,exp:"IPv4 addresses are 32 bits (4 octets)."},
+    {q:"Which protocol is connectionless?",opts:["TCP","FTP","UDP","HTTP"],ans:2,exp:"UDP (User Datagram Protocol) is connectionless — no handshake required."},
+    {q:"DNS stands for:",opts:["Domain Name System","Dynamic Network Service","Data Network Server","Domain Node Syntax"],ans:0,exp:"DNS — Domain Name System — translates domain names to IP addresses."},
+    {q:"The default subnet mask for Class C is:",opts:["255.0.0.0","255.255.0.0","255.255.255.0","255.255.255.255"],ans:2,exp:"Class C default subnet mask is 255.255.255.0."},
+    {q:"Which layer of OSI is responsible for error detection?",opts:["Physical","Data Link","Network","Transport"],ans:1,exp:"Data Link layer (Layer 2) handles error detection via CRC."},
+  ],
+  "Database Management Systems":[
+    {q:"SQL stands for:",opts:["Structured Query Language","Simple Query Logic","Standard Query Layer","Stored Query Language"],ans:0,exp:"SQL = Structured Query Language."},
+    {q:"Which normal form removes transitive dependencies?",opts:["1NF","2NF","3NF","BCNF"],ans:2,exp:"3NF removes transitive functional dependencies."},
+    {q:"ACID property — 'I' stands for:",opts:["Integrity","Isolation","Indexing","Inheritance"],ans:1,exp:"ACID = Atomicity, Consistency, Isolation, Durability."},
+    {q:"Which SQL command is used to remove a table?",opts:["DELETE","REMOVE","DROP","TRUNCATE"],ans:2,exp:"DROP TABLE removes the table structure and all data permanently."},
+    {q:"A Foreign Key in a table references the ___ of another table:",opts:["Foreign Key","Primary Key","Unique Key","Composite Key"],ans:1,exp:"A Foreign Key references the Primary Key of another table to maintain referential integrity."},
+  ],
+  "Core Java":[
+    {q:"Java programs are compiled into:",opts:["Machine Code","Native Code","Bytecode","Assembly"],ans:2,exp:"Java is compiled to platform-independent Bytecode (.class file)."},
+    {q:"Which keyword prevents method overriding in Java?",opts:["static","abstract","final","private"],ans:2,exp:"The 'final' keyword prevents a method from being overridden."},
+    {q:"What is the default value of an int variable in Java?",opts:["null","0","undefined","1"],ans:1,exp:"Default value of int in Java is 0."},
+    {q:"JVM stands for:",opts:["Java Variable Machine","Java Virtual Machine","Java Visual Manager","Just VM"],ans:1,exp:"JVM — Java Virtual Machine — executes Java bytecode."},
+    {q:"Which interface must be implemented to create a thread?",opts:["Serializable","Runnable","Comparable","Iterable"],ans:1,exp:"A class implements Runnable and overrides run() to create a thread."},
+    {q:"What does 'encapsulation' mean in OOP?",opts:["Inheriting properties","Hiding implementation details","Overloading methods","Creating multiple objects"],ans:1,exp:"Encapsulation wraps data and methods, hiding internal details."},
+  ],
+  "Software Engineering":[
+    {q:"SDLC stands for:",opts:["Software Design Life Code","System Development Life Cycle","Software Development Life Cycle","System Data Logic Cycle"],ans:2,exp:"SDLC — Software Development Life Cycle."},
+    {q:"Which SDLC model is also called the 'Waterfall + Iterative' model?",opts:["Spiral Model","V-Model","RAD","Agile"],ans:0,exp:"The Spiral Model combines iterative development with waterfall's systematic approach."},
+    {q:"A use case diagram is part of which modeling language?",opts:["ER Diagrams","UML","DFD","Flowcharts"],ans:1,exp:"Use Case Diagrams are part of UML (Unified Modeling Language)."},
+    {q:"Which testing checks if the system meets the user's requirements?",opts:["Unit Testing","Integration Testing","System Testing","Acceptance Testing"],ans:3,exp:"Acceptance Testing (UAT) verifies the system against user requirements."},
+    {q:"Cohesion in software engineering refers to:",opts:["Coupling between modules","How closely related module functions are","Number of modules","External dependencies"],ans:1,exp:"High cohesion means a module's internal elements are closely related — a good design goal."},
+  ],
+  "Artificial Intelligence":[
+    {q:"Which search algorithm is both complete and optimal for unit-cost paths?",opts:["DFS","BFS","Hill Climbing","A* Search"],ans:1,exp:"BFS is complete and optimal for uniform cost step problems."},
+    {q:"The Turing Test is designed to test:",opts:["Processing Speed","Machine Intelligence","Memory Capacity","Networking Ability"],ans:1,exp:"The Turing Test evaluates whether a machine can exhibit intelligent behaviour indistinguishable from a human."},
+    {q:"In AI, an 'agent' is defined as:",opts:["A software bug","Anything that perceives environment and takes actions","A database","A compiler"],ans:1,exp:"An AI agent perceives its environment through sensors and acts through actuators."},
+    {q:"Which algorithm is used in game playing AI (like chess)?",opts:["Dijkstra","BFS","Minimax","A*"],ans:2,exp:"Minimax algorithm is used in two-player games to minimise the maximum possible loss."},
+    {q:"A* Search uses which function to evaluate paths?",opts:["f(n) = g(n) + h(n)","f(n) = g(n) * h(n)","f(n) = h(n) - g(n)","f(n) = g(n) / h(n)"],ans:0,exp:"A* uses f(n) = g(n) + h(n), where g = cost so far, h = heuristic estimate to goal."},
+  ],
+  "Data Science":[
+    {q:"Which Python library is primarily used for data manipulation?",opts:["NumPy","Pandas","Matplotlib","Scikit-learn"],ans:1,exp:"Pandas provides DataFrame and Series structures for data manipulation."},
+    {q:"What does ETL stand for in data pipelines?",opts:["Extract Transform Load","Export Table List","Edit Transfer Log","Encrypt Transfer Layer"],ans:0,exp:"ETL = Extract, Transform, Load — a fundamental data pipeline process."},
+    {q:"Which type of chart is best for showing distribution of a variable?",opts:["Pie Chart","Bar Chart","Histogram","Line Chart"],ans:2,exp:"A Histogram displays the distribution/frequency of a continuous variable."},
+    {q:"Correlation coefficient ranges from:",opts:["0 to 1","-1 to 0","-1 to 1","0 to 100"],ans:2,exp:"Pearson's correlation coefficient r ranges from -1 (perfect negative) to +1 (perfect positive)."},
+  ],
+  "Machine Learning":[
+    {q:"Supervised Learning uses:",opts:["Unlabelled data","Labelled training data","Reinforcement signals","No data"],ans:1,exp:"Supervised learning trains models on labelled input-output pairs."},
+    {q:"Which algorithm is used for classification tasks?",opts:["K-Means","Linear Regression","Decision Tree","PCA"],ans:2,exp:"Decision Trees can be used for both classification and regression."},
+    {q:"Overfitting means the model:",opts:["Performs well on test data","Has high bias","Has memorised training data","Is too simple"],ans:2,exp:"Overfitting occurs when a model memorises training data and performs poorly on new data."},
+    {q:"Which activation function outputs between 0 and 1?",opts:["ReLU","Tanh","Sigmoid","Softmax"],ans:2,exp:"Sigmoid function outputs between 0 and 1, making it suitable for binary classification."},
+    {q:"K in K-Means clustering represents:",opts:["Number of features","Number of clusters","Number of iterations","Learning rate"],ans:1,exp:"K in K-Means specifies how many clusters to partition data into."},
+  ],
+  "Operating Systems":[
+    {q:"Which scheduling algorithm gives priority to the shortest job first?",opts:["FCFS","Round Robin","SJF","Priority"],ans:2,exp:"SJF (Shortest Job First) schedules the process with the least CPU burst time."},
+    {q:"A deadlock requires which four conditions?",opts:["Preemption, Starvation, Aging, Priority","Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait","Scheduling, Paging, Segmentation, Swapping","Buffering, Caching, Spooling, Queuing"],ans:1,exp:"Coffman's four conditions: Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait."},
+    {q:"Virtual memory uses which technique to extend RAM?",opts:["Caching","Paging","Buffering","Spooling"],ans:1,exp:"Paging divides processes into pages, allowing them to be stored on disk and swapped to RAM as needed."},
+    {q:"Which type of OS is used in real-time systems?",opts:["Batch OS","Distributed OS","RTOS","Time-Sharing OS"],ans:2,exp:"RTOS (Real-Time Operating System) is used where timely processing is critical."},
+  ],
+  "Cloud Computing and Web Services":[
+    {q:"IaaS stands for:",opts:["Internet as a Service","Infrastructure as a Service","Information as a Service","Integration as a Service"],ans:1,exp:"IaaS provides virtualised computing infrastructure over the internet."},
+    {q:"Which cloud model is exclusive to one organisation?",opts:["Public Cloud","Private Cloud","Hybrid Cloud","Community Cloud"],ans:1,exp:"A Private Cloud is dedicated to and managed by a single organisation."},
+    {q:"REST API uses which protocol?",opts:["FTP","SMTP","HTTP","TCP"],ans:2,exp:"REST (Representational State Transfer) APIs communicate over HTTP."},
+    {q:"AWS stands for:",opts:["Advanced Web Services","Amazon Web Services","Automated Workflow System","Application Web Server"],ans:1,exp:"AWS = Amazon Web Services — the world's largest cloud provider."},
+  ],
+};
+
+function getMCQPool(course,semNum,subjName){
+  const subjData=course==='bscit'?BSCIT[semNum]:BSCCS[semNum];
+  let pool=[];
+  for(const [k,v] of Object.entries(MCQ)){
+    const inSem=subjData&&subjData.some(s=>s.name.includes(k)||k.includes(s.name.split(' ')[0]));
+    if(subjName==='All Subjects'){if(inSem)v.forEach(q=>pool.push({...q,subject:k}));}
+    else{if(subjName.toLowerCase().includes(k.toLowerCase().split(' ')[0])||k.toLowerCase().includes(subjName.toLowerCase().split(' ')[0])){v.forEach(q=>pool.push({...q,subject:k}));}}
+  }
+  if(!pool.length){for(const [k,v] of Object.entries(MCQ))v.forEach(q=>pool.push({...q,subject:k}));}
+  return pool.sort(()=>Math.random()-.5);
+}
+
+// ══ AUTH ══
+let user=null;
+function swTab(t){
+  document.querySelectorAll('.a-tab').forEach((el,i)=>el.classList.toggle('on',i===(t==='login'?0:1)));
+  document.getElementById('lf').classList.toggle('on',t==='login');
+  document.getElementById('rf').classList.toggle('on',t==='register');
+}
+function doLogin(e){e.preventDefault();login(document.getElementById('le').value.split('@')[0]||'Student');}
+function doReg(e){e.preventDefault();login(document.getElementById('rfn').value||'Student');}
+function demo(){login('Demo Student');}
+function login(name){
+  user=name;
+  const init=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('nav-av').textContent=init;
+  document.getElementById('nav-un').textContent=name;
+  document.getElementById('hn').textContent=name.split(' ')[0];
+  sp('dashboard-page');
+  updSubj();mcqUpdSubj();
+  buildFullPDFStrip();
+  renderQP();
+}
+function logout(){user=null;sp('auth-page');}
+
+// ══ NAVIGATION ══
+function sp(id){
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none'});
+  const pg=document.getElementById(id);pg.style.display='flex';
+  requestAnimationFrame(()=>pg.classList.add('active'));
+}
+
+// ══ CHATBOT ══
+let curSubj=null;
+function updSubj(){
+  const course=document.getElementById('course-sel').value;
+  const sem=parseInt(document.getElementById('sem-sel').value);
+  const data=(course==='bscit'?BSCIT:BSCCS)[sem]||[];
+  const list=document.getElementById('slist');
+  list.innerHTML=data.map((s,i)=>`
+    <div class="sitem ${i===0?'on':''}" onclick="selSubj('${course}',${sem},${i})">
+      <div class="sdot"></div>
+      <div><div>${s.icon} ${s.name}</div><div class="sitem-code">${s.code} · ${s.credits} Credits</div></div>
+    </div>`).join('');
+  if(data.length)selSubj(course,sem,0);
+}
+function selSubj(course,sem,idx){
+  document.querySelectorAll('.sitem').forEach((el,i)=>el.classList.toggle('on',i===idx));
+  const subj=(course==='bscit'?BSCIT:BSCCS)[sem][idx];
+  curSubj=subj;
+  document.getElementById('chicon').textContent=subj.icon;
+  document.getElementById('chname').textContent=`${subj.code} — ${subj.name}`;
+  document.getElementById('chdesc').textContent=`Sem ${sem} · ${course.toUpperCase()} · ${subj.type} · ${subj.credits} Credits`;
+  const msgs=document.getElementById('msgs');
+  msgs.innerHTML='';
+  addMsg('a',`Hi! I'm your AI instructor for <strong>${subj.name}</strong> (${subj.code}) 📘<br><br>
+    <strong>Course:</strong> ${course.toUpperCase()}, Semester ${sem}<br>
+    <strong>Type:</strong> ${subj.type} | <strong>Credits:</strong> ${subj.credits}<br><br>
+    I can help with:<br>• Unit-wise explanations<br>• Solved examples & numericals<br>• MU exam-pattern questions<br>• Quick revision notes<br>• Viva & oral preparation<br><br>What would you like to learn?`);
+}
+function addMsg(role,html,isTyp){
+  const msgs=document.getElementById('msgs');
+  const d=document.createElement('div');
+  d.className=`msg msg-${role==='a'?'a':'u'}`;
+  if(isTyp)d.id='tdiv';
+  d.innerHTML=`<div class="mav ${role==='a'?'aav':'uav'}">${role==='a'?'🤖':'👤'}</div><div class="mb">${html}</div>`;
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+function rmTyp(){const t=document.getElementById('tdiv');if(t)t.remove();}
+function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+function uHint(el){document.getElementById('cinp').value=el.textContent.trim();sendMsg();}
+
+async function sendMsg(){
+  const inp=document.getElementById('cinp');
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';
+  const subj=curSubj?`${curSubj.code} — ${curSubj.name}`:'Computer Science';
+  addMsg('u',txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+  addMsg('a',`<div class="tdots"><div class="td"></div><div class="td"></div><div class="td"></div></div>`,true);
+  try{
+    const res=await fetch("/api/chat",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({subject:subj,message:txt})
+    });
+    const d=await res.json();rmTyp();
+    if(res.status===429){
+      addMsg('a',`⏳ <strong>Rate Limit Reached</strong><br><br>${d.error}`);
+      return;
+    }
+    if(!res.ok||d.error){
+      addMsg('a',`⚠️ <strong>Error</strong><br><br>${d.error||'Something went wrong. Please try again.'}`);
+      return;
+    }
+    addMsg('a',d.reply);
+  }catch(err){
+    rmTyp();
+    addMsg('a',`⚠️ <strong>Network Error</strong><br><br>Could not reach the server.<br><small style="color:var(--text3)">Error: ${err.message}</small>`);
+  }
+}
+
+// ══ MCQ ══
+let qz={qs:[],cur:0,score:0,ans:false};
+function mcqUpdSubj(){
+  const course=document.getElementById('mcq-course').value;
+  const sem=parseInt(document.getElementById('mcq-sem').value);
+  const sel=document.getElementById('mcq-subj');
+  sel.innerHTML='<option value="All Subjects">All Subjects</option>';
+  (course==='bscit'?BSCIT:BSCCS)[sem].forEach(s=>{
+    const o=document.createElement('option');o.value=s.name;o.textContent=`${s.code} — ${s.name.substring(0,30)}`;sel.appendChild(o);
+  });
+}
+function startQ(){
+  const course=document.getElementById('mcq-course').value;
+  const sem=parseInt(document.getElementById('mcq-sem').value);
+  const subj=document.getElementById('mcq-subj').value;
+  const cnt=parseInt(document.getElementById('mcq-cnt').value);
+  let pool=getMCQPool(course,sem,subj).slice(0,Math.min(cnt,50));
+  if(!pool.length){alert('No questions for this selection yet.');return;}
+  qz={qs:pool.slice(0,cnt),cur:0,score:0,ans:false};
+  document.getElementById('mcq-prog').classList.remove('hidden');
+  renderQ();
+}
+function renderQ(){
+  const {qs,cur,score}=qz;const tot=qs.length;
+  document.getElementById('mp-lbl').textContent=`Q ${cur+1} of ${tot}`;
+  document.getElementById('mp-bar').style.width=`${(cur/tot)*100}%`;
+  document.getElementById('ml-score').textContent=score;
+  if(cur>=tot){showRes();return;}
+  const q=qs[cur];qz.ans=false;
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="mqc">
+      <div class="mqm">
+        <div class="mqn">Q${cur+1} / ${tot}</div>
+        ${q.subject?`<div class="mqs">${q.subject}</div>`:''}
+        <div class="mqcode">University of Mumbai Pattern</div>
+      </div>
+      <div class="mqt">${q.q}</div>
+      <div class="mopts">${q.opts.map((o,i)=>`
+        <div class="mopt" id="o${i}" onclick="pick(${i})">
+          <div class="ol">${'ABCD'[i]}</div><span>${o}</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+function pick(idx){
+  if(qz.ans)return;qz.ans=true;
+  const q=qz.qs[qz.cur],cor=q.ans;
+  document.querySelectorAll('.mopt').forEach(el=>el.classList.add('dis'));
+  document.getElementById(`o${idx}`).classList.add(idx===cor?'cor':'wrn');
+  if(idx!==cor)document.getElementById(`o${cor}`).classList.add('cor');
+  if(idx===cor)qz.score++;
+  const card=document.querySelector('.mqc');
+  if(q.exp){const exp=document.createElement('div');exp.className='mcq-exp';exp.innerHTML=`💡 <strong>Explanation:</strong> ${q.exp}`;card.appendChild(exp);}
+  const btn=document.createElement('div');
+  btn.innerHTML=`<button class="btn-nx" onclick="nxtQ()">${qz.cur+1<qz.qs.length?'Next Question →':'View Results 🏆'}</button>`;
+  card.appendChild(btn);
+}
+function nxtQ(){qz.cur++;renderQ();}
+function showRes(){
+  const {qs,score}=qz,tot=qs.length,pct=Math.round(score/tot*100);
+  const em=pct>=80?'🏆':pct>=60?'👍':pct>=40?'📚':'💪';
+  const msg=pct>=80?'Excellent! MU Exam Ready!':pct>=60?'Good Work! Keep Revising!':pct>=40?'Keep Studying!':'More Practice Needed!';
+  document.getElementById('mcq-prog').classList.add('hidden');
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="mres">
+      <div style="font-size:3rem;margin-bottom:10px">${em}</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.45rem;font-weight:800;margin-bottom:6px">${msg}</div>
+      <div style="color:var(--text2);font-size:.88rem;margin-bottom:26px">You answered <strong style="color:var(--teal)">${score} out of ${tot}</strong> questions correctly</div>
+      <div style="display:flex;justify-content:center;gap:28px;margin-bottom:28px;flex-wrap:wrap">
+        <div><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--teal)">${score}/${tot}</div><div style="font-size:.75rem;color:var(--text2)">Correct</div></div>
+        <div><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)">${pct}%</div><div style="font-size:.75rem;color:var(--text2)">Score</div></div>
+        <div><div style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--rose)">${tot-score}</div><div style="font-size:.75rem;color:var(--text2)">Incorrect</div></div>
+      </div>
+      <button class="btn-rt" onclick="retryQ()">🔄 Try Again</button>
+    </div>`;
+}
+function retryQ(){document.getElementById('quiz-area').innerHTML='';document.getElementById('mcq-prog').classList.add('hidden');}
+
+// ══ SYLLABUS — Year PDFs only (year cards removed) ══
+const YEAR_PDFS={
+  bscit:{
+    fy:{label:"F.Y. BScIT",sems:"Sem 1 & 2",icon:"🎯",color:"var(--amber)",pdf:"https://drive.google.com/file/d/1kNeUvEPr46v-94KfYBgk3KmsfS9kPQg2/view?usp=drive_link",note:"EF-2024-25 (NEP)"},
+    sy:{label:"S.Y. BScIT",sems:"Sem 3 & 4",icon:"📗",color:"var(--teal)",pdf:"https://drive.google.com/file/d/1HBOtRVNXLUewmSRmzzM-sreYM5H7Rda3/view?usp=sharing",note:"EF-2025-26 (NEP)"},
+    ty:{label:"T.Y. BScIT",sems:"Sem 5 & 6",icon:"🏆",color:"var(--violet)",pdf:"https://drive.google.com/file/d/1sDK80j9PZ4XV7lc0YuQYFZuJC-07hd_R/view?usp=sharing",note:"EF-2024-25 (CBCS)"},
+  },
+  bsccs:{
+    fy:{label:"F.Y. BSc CS",sems:"Sem 1 & 2",icon:"🎯",color:"var(--amber)",pdf:"https://drive.google.com/file/d/1oT8GuQSbpHGKyF5qNeWjckDy_z76ba4S/view?usp=sharing",note:"EF-2024-25 (NEP)"},
+    sy:{label:"S.Y. BSc CS",sems:"Sem 3 & 4",icon:"📗",color:"var(--teal)",pdf:"https://drive.google.com/file/d/1uSeDRFADCDtyo4cTTOOtqpTkU3aQegph/view?usp=sharing",note:"EF-2025-26 (NEP)"},
+    ty:{label:"T.Y. BSc CS",sems:"Sem 5 & 6",icon:"🏆",color:"var(--violet)",pdf:"https://drive.google.com/file/d/1vino-sFMNhGt-tZbHYWE4wX1qbH9ry5Z/view?usp=drive_link",note:"EF-2022-23 (CBCS)"},
+  }
+};
+
+let sylCourse='bscit';
+function sylSetCourse(course){
+  sylCourse=course;
+  document.getElementById('syl-tab-bscit').classList.toggle('on',course==='bscit');
+  document.getElementById('syl-tab-bsccs').classList.toggle('on',course==='bsccs');
+  buildFullPDFStrip();
+}
+function buildFullPDFStrip(){
+  const grid=document.getElementById('full-pdf-grid');
+  if(!grid)return;
+  const pdfs=YEAR_PDFS[sylCourse];
+  grid.innerHTML=Object.entries(pdfs).map(([key,p])=>`
+    <div class="fpdf-card">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-size:1.6rem">${p.icon}</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem">${p.label}</div>
+          <div style="font-size:.72rem;color:var(--text3)">${p.sems} · ${p.note}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:6px">
+        <button class="fpdf-btn fpdf-view" onclick="openPDF('${p.pdf}')">👁 View PDF</button>
+        <button class="fpdf-btn fpdf-dl"   onclick="dlPDF2('${p.pdf}','${p.label}')">⬇ Download</button>
+      </div>
+    </div>`).join('');
+}
+function openPDF(url){if(url&&url.startsWith('http')){window.open(url,'_blank');}else{alert('PDF link not yet added.');}}
+function dlPDF2(url,name){
+  if(url&&url.startsWith('http')){const a=document.createElement('a');a.href=url;a.target='_blank';a.download=(name||'syllabus')+'.pdf';a.click();}
+  else{alert('Download link not added yet.');}
+}
+
+// ══ QUESTION PAPERS ══
+const QP_DATA={
+  bscit:[
+    {code:"USIT101",name:"Programming Principles with C",icon:"💻",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1Do_ZRiOGzdmkPJfsf8xEzwmJy1n2vumr/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1qTWCt67My3HiDjig3wlqUvwNYgrZsR7g/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1ARWd8iiRXfKJIiA6sIbiU0YeeT97Mv-R/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1XcZVKmetv7d8VwZi8mLc4vai2CuHAerB/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/13IF7IB-oRlZlVEAf2Iz0lGwRVAI0zzo-/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1x5cnBQKIXuRjsCpTmBMZcEGDMx05MSzT/view?usp=drive_link"},
+    ]},
+    {code:"USIT102",name:"Digital Logic and Applications",icon:"⚡",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1sHGuhS_aFyh-UJqgxLThBg6s3WZOffpD/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1QZTuTOrbhjxsYSj7VJUzfvMsdNIH_QuR/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1IZDOnxV6Tg8jv-8k2Bdu3DTisNA2A1yB/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1nmxXGAfM4EgmTtJUownsKqcEl6sWwzKJ/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1EHP3Iv5Tx_0Ey9n_uMS7nzQQ7bjnK2nT/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1XtN7z62JQsT7acIhqfNUe9SLh9_N_soM/view?usp=drive_link"},
+    ]},
+    {code:"USIT103",name:"Fundamentals of DBMS",icon:"🗄️",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1ZJzhDZdortOEfe7dqL69pIIKsdSwQy4R/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1KZQjzfphfU8Q-amjj1nnNtMnrVzEdXsd/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1Zeq1YVDJMuJsIG0cEUez2fQCoDLKx4Vq/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/17ykrlOgdGiK2HiI0M12AqCmC0xRMxpLj/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1GapZzbBmsWOqiwDDmPu3qyjbicZJSc50/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/16Zv51vfxOoD62NEdKWz84wcvHK96NVjz/view?usp=drive_link"},
+    ]},
+    {code:"USIT104",name:"Computational Logic & Discrete Str.",icon:"🔢",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1DLF6rc9QGd8-4pWrEwEWnSUS2A-qcT2O/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1mTAZPCwTtCIop-wvfweEpoRggD52rueT/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1tkQUDZOIm5Hai0UQ3YaunSE8kbQVm4mQ/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/13T_mJQEwy28kUCe84k5omv_UyxkvAtlC/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1VpJOcGaoA3uRSh_gCGTnU1Fyyrqh4cY7/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1GYNhJSeXvIFAv3cbG78YJn1dm3x2xHvH/view?usp=drive_link"},
+    ]},
+    {code:"USIT105",name:"Communication Skills",icon:"💬",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1yA2URNHEd0W06OU3sHBcHoeyzu6qYEa_/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1HH81B7gRPcF519DsL3BGm72c9f1tIUpI/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1RiAeuPvVio4aXO0Zb17fFevSw01OqBHp/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1OghII8S2aYv0juAr_yCoGlqymU6-DTyi/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1b7i_lwm0lD_hPjYzFdrQUpCcyWmW3ZlD/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1PoEkDj2EPtbCguK5YezAQqPqQTmUEeVi/view?usp=drive_link"},
+    ]},
+    {code:"USIT201",name:"Microprocessors & Microcontrollers",icon:"🔧",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/197bj2zB-WrHWvJt4d6owhoWkC0nLR9HX/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1v8CLHN4rJMqhoPsuqOKa4ZyMJdIrOZJg/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1oYB3sXeN1lOeCE-nOy9Vy1pr2S59k2CU/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1W478rY4r3Ia_Qc0gtm5WABtHOMawNcLb/view?usp=drive_link"},
+      {yr:"2017",exam:"Apr 2017",pdf:"https://drive.google.com/file/d/1BnEnLMsXf9F40dimf2G3c3KiiyFKvfYE/view?usp=drive_link"},
+    ]},
+    {code:"USIT202",name:"Web Applications Development",icon:"🌐",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1ulOuULnrebjuKQA7yjYUZxo6G0hfhZ-w/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1eXb-wqzkd1Idd5r5j0dY-RLTgvDk_kA5/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/16VhkOR-KovCHg8dBxZt_BqkME2J5j9fq/view?usp=drive_link"},
+      {yr:"2017",exam:"Apr 2017",pdf:"https://drive.google.com/file/d/1hesy2FoZz-h25pko_C5vpgcmkLFqf9pP/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1FXNT-zoHUNLNxw9OK6UsebVStcK711B9/view?usp=drive_link"},
+    ]},
+    {code:"USIT203",name:"Numerical Methods",icon:"📐",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1sPbiSIMLkGhDDVoyEib__Yr2HAjp3JwA/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1u9WuPIgBLqcV04wRIiv66Fjpx5D3xyyo/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1dkwfCt-oe1SCgRP706zWyquW_17i8H9T/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1FmsVxWQqudulJjG12wOSWnYo3UXZKQrw/view?usp=drive_link"},
+      {yr:"2017",exam:"Apr 2017",pdf:"https://drive.google.com/file/d/1kpTr1Rzx8AnEfdU-DN4JrSKmh3U9YZ9w/view?usp=drive_link"},
+    ]},
+    {code:"USIT204",name:"Object Oriented Programming",icon:"🔷",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1dyv5vfF_P5m9CxCDk2MncQO4m4cc5U8Y/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1nhIDx75EbtQdl5Y9ar1FBgw_8zhqHoCZ/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1K5nQgBvNd-xgPMcbbk2cYkDABeUfpamH/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/12a5eKGGeIr-Q0Bn2c09q1_ZprUwCTO21/view?usp=drive_link"},
+      {yr:"2017",exam:"Apr 2017",pdf:"https://drive.google.com/file/d/1DHkbOXJyufX0svhb5ugBmT7TfGppfRL5/view?usp=drive_link"},
+    ]},
+    {code:"USIT205",name:"Green Computing",icon:"🌿",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1lLVxMSTBlG08TrZrX6vO_LVgu7IZTEb8/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/19hxQdeAMnRYXaN8BZY3B1zcxw17xeY_W/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1uCsx0dqiYICJJhvZgDjgsi4S-xV31zAL/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1bzobwTFFd4ebYIbAKKIa8VN8vtvT2Ysz/view?usp=drive_link"},
+      {yr:"2017",exam:"Apr 2017",pdf:"https://drive.google.com/file/d/11tTAchmUF50McB4yYNPgv-Hi4lJJgmQq/view?usp=drive_link"},
+    ]},
+    {code:"USIT301",name:"Python Programming",icon:"🐍",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1ZajlTJrxB8fGWWxcVsaRaKkisfGVwV5r/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1_LZwygut48ckRdl_dLWyDaG8C7TBOm9B/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1sZ0rlZc900vJ_6_wBjGstzwFuw5wtSr1/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1tXbwUW6NPWiVMgwt-DRIrRfI3vm1W9uA/view?usp=drive_link"},
+    ]},
+    {code:"USIT302",name:"Data Structures",icon:"🌳",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1zde_1p4pojy16OUse8UjcWyE8uOXOeDc/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/10_NrYpHtl2597ZN1HOAhGNnPKZtuVhap/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1iQAGFwsTGwmdCUFR1GN_4lkRs3HRZR2O/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1H-VDfMfssdTU_ZY65XPgtFr37DWNxL-p/view?usp=drive_link"},
+    ]},
+    {code:"USIT303",name:"Computer Networks",icon:"🌐",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1O6OpZVX3XKZxj5H6HbOowOgulsQREuY3/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1KBbOZjMlHoD06H0XVUjBNjZCqnoxg_-L/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/15FNUC-4IjpNhkkrRrRo5qb6KKRwDgK_t/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/17bjKsFzdxL9Y31TuZtwayJio3Et8eCJP/view?usp=drive_link"},
+    ]},
+    {code:"USIT304",name:"Database Management Systems",icon:"🗄️",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1MXoaF5cWGTngkv0EMHOTSSnEEFfryQM6/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1K9LLT7Gc0QKOVlm7Z-CkmSstgqVfk0iL/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1aY_qM3b0tGB-G5uuoDclsXBQwUZfiei6/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1-Alhd20TXEj59hJSXidVxQ02N6h40a3d/view?usp=drive_link"},
+    ]},
+    {code:"USIT305",name:"Applied Mathematics",icon:"📊",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/170UJSmPoPr5tdHfWA7FI_wUy2_f_xBZS/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1SBDk0DphYDLEfIJ51FxxifvNfYcvF7WY/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1JGAx04qpYZwWSxT4RJyOC0wSNB2XsV2R/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1bjH1QrGvJjIvO73c4hucKzaiErcE08Ua/view?usp=drive_link"},
+    ]},
+    {code:"USIT401",name:"Core Java",icon:"☕",year:"sy",sem:4,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1zCHvGpq9nrf99Dd2WEunUv_k5N8gUonS/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/11tTEDvNR-S9hvwqoi93xZaSBFDQcSfZ1/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1GEu8MwBkP7VOwejCN3J7nVMEDMuF6BLr/view?usp=drive_link"},
+    ]},
+    {code:"USIT402",name:"Introduction to Embedded Systems",icon:"🔌",year:"sy",sem:4,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1RnrJBeRvh5wAaCUXwxeL38e5EdiLLn1A/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1beq8WXjIOQ5pwMESct-ak5TJ78xtcV7K/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1TEIrrViwWV6Ihtw9NTPFtZEOwkjaupet/view?usp=drive_link"},
+    ]},
+    {code:"USIT403",name:"Computer Oriented Stat. Techniques",icon:"📉",year:"sy",sem:4,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1UFwujxjl3rn69FSKNx1nQ816pESZBuLN/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1aUH8ywiZImH4snKCNU_db5mtEKXZaPPx/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1mnBQfgezwlqs_Kh8H_2w28iDOGIcClXX/view?usp=drive_link"},
+    ]},
+    {code:"USIT404",name:"Software Engineering",icon:"🛠️",year:"sy",sem:4,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1qVDd3BALPutwQiPyWsd_GRxcBLp7YDZy/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1xqGd-OaXOgQLMEMB9mQXyhPrbhxYNOj4/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1Pm67jTZuTs-_w-cMwzgmL7iuFUNnA_FP/view?usp=drive_link"},
+    ]},
+    {code:"USIT405",name:"Computer Graphics and Animation",icon:"🎨",year:"sy",sem:4,papers:[
+      {yr:"2019",exam:"Apr 2019",pdf:"https://drive.google.com/file/d/1_xGGMR46rRRvTdXem2hhCN3k4kxwAf-W/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1SrwvsM_MyuMtwaLYwMphnTOZkOrJSBjE/view?usp=drive_link"},
+      {yr:"2018",exam:"Apr 2018",pdf:"https://drive.google.com/file/d/1eKqpkLFPGCSExxa9pXgfZJKwH_CCSChj/view?usp=drive_link"},
+    ]},
+    {code:"USIT501",name:"Software Project Management",icon:"📋",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1Ip7sSRLJPq0W7jo3e15LycXL9lf8zyO2/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1TpGuuTeuum49EnhFi_O7HoH6LgDmMOqG/view?usp=drive_link"},
+    ]},
+    {code:"USIT502",name:"Internet of Things (IoT)",icon:"📡",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1hFNYDlzvJ8COlk7Js_qjTUL9dqMMmB1V/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/13-Qx5lZ2nQ8zSeaLzj72dLc7q3wLLJyp/view?usp=drive_link"},
+    ]},
+    {code:"USIT503",name:"Artificial Intelligence",icon:"🤖",year:"ty",sem:5,papers:[
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1hnkinQcOI10Kg4JwdfNnpzgG4M-cQtQZ/view?usp=drive_link"},
+    ]},
+    {code:"USIT504",name:"Advanced Web Programming",icon:"🌐",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1mIusx_KNXbhXnhCy15fxv_e1BEN_aU6h/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/16Cm5csMWGGb0kT-r-9xxGw4xxcj8PBaK/view?usp=drive_link"},
+    ]},
+    {code:"USIT505",name:"Linux System Administration",icon:"🐧",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1xKGEjhlvXmDX8dgmVEKleTkzTZi1z-Q6/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1IKdXhoVWrpXLNFwXuxLfZdL8dNL4DEsD/view?usp=drive_link"},
+    ]},
+    {code:"USIT506",name:"Enterprise Java",icon:"☕",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1ZQN2rH6WU0fsLXk6w0bELFErSLDsDis6/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1sHDuRliengwIVjq1EzYGa7zmoFN7_fJc/view?usp=drive_link"},
+    ]},
+    {code:"USIT507",name:"Next Generation Technologies",icon:"🚀",year:"ty",sem:5,papers:[
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1qq8eQyhBAZS6HTtUIVSmvX2Rb-h5rmbj/view?usp=drive_link"},
+    ]},
+    {code:"USIT601",name:"Software Quality Assurance",icon:"✅",year:"ty",sem:6,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1IGOrnXo7N_cbq2RXkMv6RbehTOSET30y/view?usp=drive_link"},
+    ]},
+    {code:"USIT602",name:"Business Intelligence",icon:"📊",year:"ty",sem:6,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1Vm4sgrWNIYpjhUvG7XgIhtTW2KManROF/view?usp=drive_link"},
+    ]},
+    {code:"USIT603",name:"Fundamental of GIS",icon:"📊",year:"ty",sem:6,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1zO4l2rQ_nyejG2qS13cVVql5_n6FVAj3/view?usp=sharing"},
+    ]},
+    {code:"USIT604",name:"Cyber Laws and IT Security",icon:"⚖️",year:"ty",sem:6,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1m8v8PFLtZ_frs4aIiazjjtYqE6-11WQH/view?usp=drive_link"},
+    ]},
+    {code:"USIT605",name:"IT Service Management (ITSM)",icon:"🔧",year:"ty",sem:6,papers:[
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1Bx1YSLvBujxUaXjJzznHLngJ1iV62eTk/view?usp=drive_link"},
+      {yr:"2023",exam:"April 2023",pdf:"https://drive.google.com/file/d/1XWoNEgRMZ_2VW0Gv4ygrUXQpoS4Kf3Pl/view?usp=drive_link"},
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/192wKngBQp2PRPy5KzMO-6X6n1CouQPFa/view?usp=drive_link"},
+    ]},
+    {code:"USIT604/605",name:"Security in Computing",icon:"🛡️",year:"ty",sem:6,papers:[
+      {yr:"2025",exam:"Apr 2025",pdf:"https://drive.google.com/file/d/1Nqy38Or-x8dUm82KQhMZGajA-btFlRUC/view?usp=drive_link"},
+    ]},
+  ],
+  bsccs:[
+    {code:"USCS101",name:"Computer Organization and Design",icon:"💻",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/159dJnXvA9_L846s8vPnWYuLAc-Mjxtmj/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/18k_BHSZYrZsiWw1lnaEolUCELjjtdzIC/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1Lf6Lz4t_7O3J4qUyNXU-Sg2eWX-b3IiU/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1A7wXhjjjEYQAKCaT4zwIGiOpWLog-ano/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1YOEHVuACDq1Ra4q5RY42uaOx8lS1izpX/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1Nolve92FbL_RD59RpqLgz67TiYaAJwL3/view?usp=drive_link"},
+    ]},
+    {code:"USCS102",name:"Programming with Python – I",icon:"⚡",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1axewPL9-w2iyQ6Jq08IxWZ4G9xC0fJWy/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1-cE-EXxxF4wIMjZZl_iji3DB7RVp1LPp/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1_s6gRJh_jP8KcZTAAaElUsG7royssf7Z/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1j9pelw-zTLCVhE_R3QZhLdelo73XyL3c/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1uT4m9k-mlClW890zDLpCLOpol6A4WS-P/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1ejwBX1I8Xm2E4yCM03zS2kyky2T8fP1R/view?usp=drive_link"},
+    ]},
+    {code:"USCS103",name:"Free and Open Source Software (FOSS)",icon:"🔢",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/14zBUbUC91cOJQU7E713ynN7Hl7yHatKP/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1pSLTctceZHvEwaGpoMkVVRPNNFbwu-cd/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1p3dnxNOZaZJTBjd3kMlF9nJ1pQolHJdm/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1oEkbtgw5vjMdDgfgsULpSkvV5DIZE9C6/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1f2ErObsimt2kvr4jr-MkN1NOyNj1VBA5/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/17Wz62bXFo4p9BYeIxdrZaBAUCh6QR3Mr/view?usp=drive_link"},
+    ]},
+    {code:"USCS104",name:"Database Systems",icon:"📐",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1894JBgNz2UAGs2uRCzmw5nYqjAHQyF5Y/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1NNdTXg4KcQITJ_F63v_bEdO0uUQt9pwx/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1G3vYQsG_eLcv2g_ls_AmijJTQig2ixcR/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1J-HRbhenxxFfFzz461sUdKRE06P9U20C/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/18oE9kZIsrnixahlxmhNtuL6euylw4pJh/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1MqSBuyEsDtAz-e2ugAeCQpVSCy5QXdMS/view?usp=drive_link"},
+    ]},
+    {code:"USCS105",name:"Discrete Mathematics",icon:"📐",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1_MVuylpikdZ2AxRwe-RASCCvLPpFj3ma/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1yOGTsEGz5NDYsbMH_CH_oArU0DQJJpLj/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/16E8dJdvLDDyolglWitgZlc9RAjL_JYyx/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1REOtesNZshL20BJgTpJdfPB08t_BpVrv/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/176Mr1_n8vNx01kMe5gLaPItjIQNlr6WS/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1YDcTgCTsX58wfIYLwFvMJ_AIu2NAO0o7/view?usp=drive_link"},
+    ]},
+    {code:"USCS106",name:"Descriptive Statistics and Introduction to Probability",icon:"📐",year:"fy",sem:1,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1G5P2ps46kv6yV5NoAj17AEsAVAtwyfpL/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1hrltD41Q2QRd4566F_WC38RgrxNpriCL/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1Tq1e2dG0M-rvy_8myaveiM2oJuDAMwuz/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1OU2Nvo79sXoJc-LTZ2w4camzKKK_qATL/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/17UGeBT93ntFodijveofArHtVm2v8Hi4x/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1F1dEItxkE1M2ICQFdCA4I-uz-fHMA4M8/view?usp=drive_link"},
+    ]},
+    {code:"USCS107",name:"Soft Skills Development",icon:"🔢",year:"fy",sem:1,papers:[
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1NEcOC3iWG3BqpzOdtdkgB-S02Sf-OeWj/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1CkIOzgaZTxVQKQlWQANV3av-zxLrhxse/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/10vYNBUgdwAnlzyCWuNryyReMlVcLBggS/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1Szc9DNfZ7g-2WoI981c5wawAAwOcQdms/view?usp=drive_link"},
+      {yr:"2016",exam:"Nov 2016",pdf:"https://drive.google.com/file/d/1Z8dd-pn-PhbbA0u6jRb6sQLppzu4AiCt/view?usp=drive_link"},
+    ]},
+    {code:"USCS201",name:"OOP with C++",icon:"🔷",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1cYqtXTX65ebbeeY2-J_XMKz5rJNrAodZ/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1aNE-q2taqRjhchQ4IZC0D80QnmfVd8rN/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1ckWegaZagZ_gLQbbHcUe9mx5OQnQ4tUb/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1r1ck9xbSXAYnovNaMfpOGxQP4v36T5yJ/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/14BYRbG0vrZ0yluIOO__Rc3mEHYUVu14u/view?usp=drive_link"},
+    ]},
+    {code:"USCS202",name:"Programming with Python-II",icon:"📐",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/166Ko79v5wtHv3DlWJQInHBmxbe-xo3XE/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1-S7K0jrYHwGIMY52w8x71knBAtyRa4sV/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1EGEvx7mIVDxAgAcvEw9x8YrBsdQPV-aK/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1MCBMnaWdEYloS8ithDqoNj2bi5GQLO-X/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1UYYnRq_Jqo33WYgViwOEMTuU9JtOo0Px/view?usp=drive_link"},
+    ]},
+    {code:"USCS203",name:"Linux System Administration",icon:"🌐",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1QRVH8wToarWws0MHbCGc3J47gXMl-p2t/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/15KcGVgH_QgSYNcyfb_Cz7qMdtEgBTZWB/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1ttqEU0r5QTkGMOBM6FwAHVFs-3h3pVJk/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1FONa9ss_y55zgW45hS82Ll8LGhbYATiC/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1xrUNwQey_BC8qUagSid0-sftiFXuwOwH/view?usp=drive_link"},
+    ]},
+    {code:"USCS204",name:"Data Structures",icon:"🔧",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1C0xTNdN9GBj5wdWg_g5ba6rbu83QWTMb/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1rSCCYvFE8cD4ZnLlkMAxH7OEQml51yyr/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1BtfB5PGUzvg85cs9mv1CnaH1F8kSHiIx/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1D56TtvKGmgyNN5XfA7d7OMAvAqvUeoKL/view?usp=drive_link"},
+    ]},
+    {code:"USCS205",name:"Calculus",icon:"🔧",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1D0UHLy5dCkLwyGMhou0LOZJXB4sZ2fRJ/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1JiQZr8NNq2p8e1JI1M-j90RF-XZus4HL/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1pEznQ5qC1xpr29RpYaLLBZ7CvlvQPbIV/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1csVY8nXyC9Cd_MA-PcZdlVb3XOIPFpZY/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1FSMzEvFuUwoVmJwJHf1MCeI0pTerfZyd/view?usp=drive_link"},
+    ]},
+    {code:"USCS206",name:"Statistical Methods and Testing of Hypothesis",icon:"🔧",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1Sq_jrHSCIEILqH6CGW0uAxdzbkYTgwFD/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1uINuiBxUKTErp4xgpd9HVKrXX-re13Hb/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1F5hVdAno3C9gMKsJTtVNVyyLws83s7dH/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1Uct6SqaOg0wKUnFt2H-Cxa7MtF1g2reA/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1GD4YkVi18sGDTHMC078ho07BHye9xSUO/view?usp=drive_link"},
+    ]},
+    {code:"USCS207",name:"Green Computing",icon:"🔧",year:"fy",sem:2,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1FEztNH9O_C5tJXpGwEVmsDnr0r7g1_w6/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1FUvCHJw5_efvycIUMwGyt-F2h98I2DvT/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1_zbRo-79G_tfm5cKPq2ID16Ntwkh6191/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1rwiuHraXhM_lNxKHaEdlqQNJSHFAtnFZ/view?usp=drive_link"},
+      {yr:"2017",exam:"April 2017",pdf:"https://drive.google.com/file/d/1s_4zMDD_vTfaTdSrMj3vT7HNROtTUptn/view?usp=drive_link"},
+    ]},
+    {code:"USCS301",name:"Theory of Computation",icon:"🌳",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1YUU6OsXF1aqfsessf25-mEBuYiXeysUI/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1kHikl4UEaK-WA-K3oySPo1G2nc_DMCJ9/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1VBpTDCBKgWVh3iY1Vsb5AWFFlV2UEiw_/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1tXuuhm-g1YynrWvkJoXPb2jm-1NNJE8K/view?usp=drive_link"},
+    ]},
+    {code:"USCS302",name:"Core Java",icon:"🌐",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1CjXn3hL8iIu7PQUemk-Z7isV3dZ9w685/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1I_ytdMrHdZru9ux_ZX2x6pbMKX2EcoOD/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1ZKoniV2cYFQC1KHel5iB_ZPSZQFwvNWQ/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1z_jJVAwbpcSvxNtaG8UaOnxu6Q3M6ESU/view?usp=drive_link"},
+    ]},
+    {code:"USCS303",name:"Operating System",icon:"🗄️",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/10TsqQL_gu_9GmNbTwHvXhzeJhtE_7Cie/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1nFHkTo5GYf1Z45bzdroRyA5YCWOpOCpE/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/12b6DUsiqdLwUJfsYcUqoxYIqTqmImUrK/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/15uRxb_8XD0XXJT7iInoL6FjgNnpzT2ia/view?usp=drive_link"},
+    ]},
+    {code:"USCS304",name:"Database Management Systems (DBMS)",icon:"🔢",year:"sy",sem:3,papers:[
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1UMxY1U-EJyTJLlHJYZaSAZ6znukCJo_N/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/19VrGyaKMRaFGEmRYZcy4roHN0FI51Jd-/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1Dygd8fmEXXH6GgwFP8sesKKz8rT6sxSL/view?usp=drive_link"},
+    ]},
+    {code:"USCS305",name:"Combinatorics and Graph Theory",icon:"🐍",year:"sy",sem:3,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/187SIqPtoz-200YFB8XLhvfsaQ0BrwJ3W/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1WuDOBaRpsSZjeSd5bUfbsvvHONw6kg-0/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/17rmmsMD6YKI9FElFZNnR9_YtXgFaEC6S/view?usp=drive_link"},
+      {yr:"2017",exam:"Nov 2017",pdf:"https://drive.google.com/file/d/1YYS7B00Uzg3yAGCtmv95nJLJ2EjHYsSW/view?usp=drive_link"},
+    ]},
+    {code:"USCS305B",name:"Web Programming (Skill Enhancement)",icon:"🐍",year:"sy",sem:3,papers:[
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/15LsewGM2mnwJFrqX4fRtwG85sOVUt4Bo/view?usp=drive_link"},
+      {yr:"2023",exam:"Nov 2023",pdf:"https://drive.google.com/file/d/1w5CMB-33M5zK-mQdhvWYfxNWU8B0T5D5/view?usp=drive_link"},
+      {yr:"2022",exam:"Nov 2022",pdf:"https://drive.google.com/file/d/1STY3cEOAAS3td4syeXtzMDFek2Nx01Zo/view?usp=drive_link"},
+      {yr:"2021",exam:"Nov 2021",pdf:"https://drive.google.com/file/d/1w74UcFFi058LoB0HEJOmsHA-KiOGky_k/view?usp=drive_link"},
+    ]},
+    {code:"USCS404",name:"Core Java (SY)",icon:"☕",year:"sy",sem:4,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1_8nhpQMrBjTtAyzqAj8NCzMFCqX7H_FJ/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1j6K962a0bk_2jXu9PogTxH0a7sJ2rjzb/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1wnn3ngSu1xmBUKcGP6ONb6GluGciOKlk/view?usp=drive_link"},
+    ]},
+    {code:"USCS402",name:"Computer Networks",icon:"🎨",year:"sy",sem:4,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1ZVKcIQ0I62mXavg2u4gBxOWfYZ5lQDqV/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1OJYUDS5UdRgNtpHfb0cxDkNi6JcGwcfB/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1FTUEyMLrPVFeacddgOINuLvNp73fJxIe/view?usp=drive_link"},
+    ]},
+    {code:"USCS406",name:"Software Engineering",icon:"🛠️",year:"sy",sem:4,papers:[
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1JTQgKaQoVctxH26s3rUoJRjc8vOMn2FO/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/16C2mSDdRtQqaTS7YEgPoqF94hlGoTuhV/view?usp=drive_link"},
+      {yr:"2018",exam:"April 2018",pdf:"https://drive.google.com/file/d/1_h0JmChHQmOsRDppsIkASsSePxxI0MLT/view?usp=drive_link"},
+    ]},
+    {code:"USCS501",name:"Artificial Intelligence",icon:"🤖",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/16030qb5AAdubVVQibhiwMtflUHEYZifP/view?usp=drive_link"},
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1AEx29eXVGG-uoMdo0kCkuHycyEqxWQIj/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1aa2iHKe23HA156PBpwM1JTMQgH7NSv0D/view?usp=drive_link"},
+      {yr:"2023",exam:"Nov 2023",pdf:"https://drive.google.com/file/d/1pW_OO1IkuO2UKRO2EIhx9F_Mr4_zaH19/view?usp=drive_link"},
+    ]},
+    {code:"USCS502",name:"Linux Server Administration",icon:"🐧",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1zP0oLjWj6M9avYG4SSUTWfC0LQ97b9Bv/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1CwfLwiJO3qpfRmyQk_MwBO9W4KucoRQC/view?usp=drive_link"},
+      {yr:"2023",exam:"Nov 2023",pdf:"https://drive.google.com/file/d/1KVk8wBlfcxoKvSeEzcoYZeEnf508TW2j/view?usp=drive_link"},
+    ]},
+    {code:"USCS503",name:"Software Testing & Quality Assurance",icon:"🔐",year:"ty",sem:5,papers:[
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1vEU3VMZDic7LqYSYiBdMQ3KlX9EFuYjo/view?usp=drive_link"},
+    ]},
+    {code:"USCS504",name:"Information & Network Security",icon:"🧠",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1GuzIIQoSkvAi3MEOW5PFvbIPrsKdNUU8/view?usp=drive_link"},
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/13vr3LnzGS9APBYrjjtsCLvyE81WmT85_/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1iCF_ljN1isA4kCid0VqR2YkxWuIU1DPX/view?usp=drive_link"},
+      {yr:"2023",exam:"Nov 2023",pdf:"https://drive.google.com/file/d/15H3WsPYr_BPE0GW8xMh5wz0e0VT-RGth/view?usp=drive_link"},
+    ]},
+    {code:"USCS505",name:"Internet of Things (IoT)",icon:"📡",year:"ty",sem:5,papers:[
+      {yr:"2023",exam:"April 2023",pdf:"https://drive.google.com/file/d/1YBIAirrEgMPWpeGg8gr9HeTVorIjXgbu/view?usp=drive_link"},
+      {yr:"2022",exam:"Nov 2022",pdf:"https://drive.google.com/file/d/1iX8-4KSXbIOzhvB2z0JTk9Yb0TUqWIa5/view?usp=drive_link"},
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/116jCs7ZzuEHsNHPkTirHf2RN-YQS73Y-/view?usp=drive_link"},
+      {yr:"2019",exam:"Nov 2019",pdf:"https://drive.google.com/file/d/1DUHb5_-HbMBm0KwQWXtRQZONJgnLy6Tj/view?usp=drive_link"},
+      {yr:"2018",exam:"Nov 2018",pdf:"https://drive.google.com/file/d/1ZASEaSVGBDhKSv5vUgFtGR3uEBmSSPut/view?usp=drive_link"},
+    ]},
+    {code:"USCS506",name:"Project Management",icon:"📋",year:"ty",sem:5,papers:[
+      {yr:"2025",exam:"April 2025",pdf:"https://drive.google.com/file/d/1hvjJWxbpBw98tcnufNtVO2PH1o3F7CZb/view?usp=drive_link"},
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1UNYX554jen_sLcr_lFn-c9mW8xxAKy6j/view?usp=drive_link"},
+      {yr:"2024",exam:"Nov 2024",pdf:"https://drive.google.com/file/d/1lz8n-BccVJl3WpfHLD5zKNvU9h7YiL9O/view?usp=drive_link"},
+    ]},
+    {code:"USCS601",name:"Data Science",icon:"📊",year:"ty",sem:6,papers:[
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1ji5ZdQKimYPvNv5or78FSO80qljprvNH/view?usp=drive_link"},
+    ]},
+    {code:"USCS602",name:"Cloud Computing & Web Services",icon:"☁️",year:"ty",sem:6,papers:[
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1ms31tfhBRMWcGPlIHPmulJRf55AmkQGu/view?usp=drive_link"},
+    ]},
+    {code:"USCS6031",name:"Wireless Sensor Networks",icon:"📡",year:"ty",sem:6,papers:[
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1moNRxPPj_asnZ0b0c9NW_-3-q34YFM1M/view?usp=drive_link"},
+    ]},
+    {code:"USCS6032",name:"Information Retrieval",icon:"🔍",year:"ty",sem:6,papers:[
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1F5q1AvB05K7aQtHLk472vFfJ3wV-zC0h/view?usp=drive_link"},
+    ]},
+    {code:"USCS6041",name:"Digital Image Processing",icon:"🖼️",year:"ty",sem:6,papers:[
+      {yr:"2023",exam:"April 2023",pdf:"https://drive.google.com/file/d/1PKDSa0sttcD2UH_ggTk6jJjwDhm2M4fH/view?usp=drive_link"},
+      {yr:"2019",exam:"April 2019",pdf:"https://drive.google.com/file/d/1weALy-re_etjj4MNod7uI6N292C4xGAN/view?usp=drive_link"},
+    ]},
+    {code:"USCS6042",name:"Ethical Hacking",icon:"🛡️",year:"ty",sem:6,papers:[
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1MTH5zlMCVXFcD9qoMNl24xUDfgT2bcl4/view?usp=drive_link"},
+    ]},
+    {code:"USCS6052",name:"Cyber Laws and IPR",icon:"⚖️",year:"ty",sem:6,papers:[
+      {yr:"2024",exam:"April 2024",pdf:"https://drive.google.com/file/d/1p0iwOZ4N-fJoLOxsnLwT3BMsVCbPgail/view?usp=drive_link"},
+    ]},
+  ]
+};
+
+const QP_META={
+  fy:{label:"First Year",color:"var(--amber)",bg:"rgba(245,158,11,.12)",border:"rgba(245,158,11,.28)"},
+  sy:{label:"Second Year",color:"var(--teal)",bg:"rgba(16,185,129,.1)",border:"rgba(16,185,129,.28)"},
+  ty:{label:"Third Year",color:"var(--violet)",bg:"rgba(139,92,246,.1)",border:"rgba(139,92,246,.28)"},
+};
+function qpSetYear(yr){
+  document.getElementById('qp-year').value=yr==='all'?'all':yr;
+  ['all','fy','sy','ty'].forEach(k=>{
+    const el=document.getElementById('qyt-'+k);
+    if(!el)return;
+    el.className='qp-ytab qp-'+(k==='all'?'fy':k);
+  });
+  const active=document.getElementById('qyt-'+yr);
+  if(active)active.classList.add('on');
+  renderQP();
+}
+function renderQP(){
+  const con=document.getElementById('qp-container');
+  const course=document.getElementById('qp-course').value;
+  const yearF=document.getElementById('qp-year').value;
+  const semF=document.getElementById('qp-sem').value;
+  const src=document.getElementById('qp-src').value.toLowerCase().trim();
+  let subjects=(QP_DATA[course]||[]).filter(p=>{
+    if(yearF!=='all'&&p.year!==yearF)return false;
+    if(semF!=='all'&&p.sem!==parseInt(semF))return false;
+    if(src&&!p.name.toLowerCase().includes(src)&&!p.code.toLowerCase().includes(src))return false;
+    return true;
+  });
+  if(!subjects.length){
+    con.innerHTML=`<div class="qp-empty"><div class="qp-empty-icon">📭</div><div class="qp-empty-title">No papers found</div><div class="qp-empty-sub">Try changing the filter or search term.</div></div>`;
+    return;
+  }
+  const bySem={};
+  subjects.forEach(p=>{if(!bySem[p.sem])bySem[p.sem]=[];bySem[p.sem].push(p);});
+  let html='';
+  Object.keys(bySem).sort((a,b)=>a-b).forEach(s=>{
+    const items=bySem[s];
+    const yr=items[0].year;
+    const m=QP_META[yr];
+    const yearLbl=s<=2?'First Year (FY)':s<=4?'Second Year (SY)':'Third Year (TY)';
+    html+=`
+      <div class="qp-sem-block">
+        <div class="qp-sem-hdr">
+          <div class="qp-pill" style="background:${m.bg};color:${m.color};border:1px solid ${m.border}">Semester ${s}</div>
+          <span>${yearLbl} · ${course.toUpperCase()}</span>
+          <span style="margin-left:auto;font-size:.76rem;font-weight:400;color:var(--text2)">${items.length} subject${items.length>1?'s':''}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          ${items.map(p=>{
+            return`
+            <div class="qp-subject-card" style="border-left:3px solid ${m.color}">
+              <div class="qp-subj-hdr">
+                <div class="qp-subj-icon" style="background:${m.bg};color:${m.color}">${p.icon}</div>
+                <div class="qp-subj-info">
+                  <div class="qp-subj-code">${p.code}</div>
+                  <div class="qp-subj-name">${p.name}</div>
+                </div>
+                <div class="qp-subj-count" style="color:${m.color}">${p.papers.filter(pp=>pp.pdf&&pp.pdf.startsWith('http')).length}/${p.papers.length} papers</div>
+              </div>
+              <div class="qp-papers-list">
+                ${p.papers.map(pp=>{
+                  const has=pp.pdf&&pp.pdf.startsWith('http');
+                  return`
+                  <div class="qp-paper-row ${has?'qp-row-has':'qp-row-empty'}">
+                    <div class="qp-paper-yr">
+                      ${has?'📄':'⬜'}
+                      <span class="qp-yr-badge" style="${has?`background:${m.bg};color:${m.color};border-color:${m.border}`:''}">
+                        ${pp.yr}
+                      </span>
+                      <span class="qp-exam-lbl">${pp.exam}</span>
+                    </div>
+                    <div class="qp-paper-btns">
+                      ${has
+                        ?`<button class="qp-pbtn qp-pbtn-v" onclick="openPDF('${pp.pdf}')">👁 View</button>
+                           <button class="qp-pbtn qp-pbtn-d" onclick="dlPDF2('${pp.pdf}','${p.code}_${pp.yr}')">⬇ Download</button>`
+                        :`<span class="qp-not-added">PDF not added yet</span>`
+                      }
+                    </div>
+                  </div>`;
+                }).join('')}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  });
+  con.innerHTML=html;
+}
+
+// ══ INIT ══
+window.onload=function(){
+  sp('auth-page');
+  mcqUpdSubj();
+};
+</script>
+</body>
+</html>
