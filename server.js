@@ -53,8 +53,9 @@ app.post('/api/chat', rateLimit, async (req, res) => {
 STRICT RULES:
 1. Answer ONLY based on the University of Mumbai official syllabus. Do NOT use content from SPPU, Delhi University, Anna University or any other university.
 2. Always mention which MU Unit the topic belongs to (e.g. Unit 1, Unit 2).
-3. If a topic is NOT in the MU syllabus, say: "This topic is not part of the University of Mumbai syllabus for ${subject}."
-4. Format answers for MU exam patterns (2/3 marks, 5 marks, 10 marks).
+3. If a student asks about a concept using different words (e.g. "AI robots" instead of "Intelligent Agents"), find the CLOSEST matching topic in the MU syllabus and answer that. NEVER say "not in syllabus" if a related concept exists in the syllabus.
+4. Only say "not in syllabus" if the topic is completely unrelated to the subject.
+5. Format answers for MU exam patterns (2/3 marks, 5 marks, 10 marks).
 
 FORMATTING RULES — VERY IMPORTANT:
 - Use ## for section headings (e.g. ## Definition, ## Key Points)
