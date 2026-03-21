@@ -49,29 +49,28 @@ FORMAT (use plain HTML only):
 
 Always begin your response by stating the Unit name/number this topic falls under as per MU syllabus.`;
 
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: systemPrompt }] },
-        contents: [{ role: 'user', parts: [{ text: message }] }],
-        generationConfig: { maxOutputTokens: 1000 }
-      })
-    });
+  // Try multiple models — if one fails, next is tried automatically
+  const MODELS = ['gemini-1.5-flash', 'gemini-1.5-flash-latest', 'gemini-1.5-pro', 'gemini-2.0-flash'];
+  const body = JSON.stringify({
+    system_instruction: { parts: [{ text: systemPrompt }] },
+    contents: [{ role: 'user', parts: [{ text: message }] }],
+    generationConfig: { maxOutputTokens: 1000 }
+  });
 
-    const data = await response.json();
-
-    if (data.error) return res.status(400).json({ error: data.error.message });
-
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, could not get a response.';
-    res.json({ reply });
-
-  } catch (err) {
-    console.error('Gemini API error:', err);
-    res.status(500).json({ error: 'Network error reaching AI service.' });
+  let lastError = 'All models failed.';
+  for (const model of MODELS) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+      const data = await response.json();
+      if (data.error) { lastError = data.error.message; continue; }
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, could not get a response.';
+      return res.json({ reply });
+    } catch (err) {
+      lastError = err.message;
+    }
   }
+  res.status(500).json({ error: lastError });
 });
 
 app.get('*', (req, res) => {
