@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ── Simple in-memory rate limiter ──────────────────────────────────────────
+// ── Rate limiter ───────────────────────────────────────────────────────────
 const rateLimitMap = new Map();
 const RATE_LIMIT = 20;
 const WINDOW_MS  = 60 * 60 * 1000;
@@ -29,7 +29,7 @@ app.post('/api/chat', rateLimit, async (req, res) => {
   const { subject, message } = req.body;
   if (!subject || !message) return res.status(400).json({ error: 'Missing subject or message.' });
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'Server API key not configured.' });
 
   const systemPrompt = `You are an AI Subject Instructor strictly for the University of Mumbai (MU). You ONLY teach "${subject}" as defined in the official University of Mumbai CBCS syllabus for BScIT / BSc CS students.
@@ -49,28 +49,33 @@ FORMAT (use plain HTML only):
 
 Always begin your response by stating the Unit name/number this topic falls under as per MU syllabus.`;
 
-  // Try multiple models — if one fails, next is tried automatically
-  const MODELS = ['gemini-1.5-flash', 'gemini-1.5-flash-latest', 'gemini-1.5-pro', 'gemini-2.0-flash'];
-  const body = JSON.stringify({
-    system_instruction: { parts: [{ text: systemPrompt }] },
-    contents: [{ role: 'user', parts: [{ text: message }] }],
-    generationConfig: { maxOutputTokens: 1000 }
-  });
+  try {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 1024,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: message }
+        ]
+      })
+    });
 
-  let lastError = 'All models failed.';
-  for (const model of MODELS) {
-    try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-      const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
-      const data = await response.json();
-      if (data.error) { lastError = data.error.message; continue; }
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, could not get a response.';
-      return res.json({ reply });
-    } catch (err) {
-      lastError = err.message;
-    }
+    const data = await response.json();
+    if (data.error) return res.status(400).json({ error: data.error.message });
+
+    const reply = data.choices?.[0]?.message?.content || 'Sorry, could not get a response.';
+    res.json({ reply });
+
+  } catch (err) {
+    console.error('Groq API error:', err);
+    res.status(500).json({ error: 'Network error reaching AI service.' });
   }
-  res.status(500).json({ error: lastError });
 });
 
 app.get('*', (req, res) => {
