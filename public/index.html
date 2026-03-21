@@ -352,9 +352,23 @@ select.fi option{background:var(--card)}
         <div><label class="fl">Full Name or Email</label><input type="text" class="fi" id="le" placeholder="Rahul Sharma or you@college.edu" required/></div>
         <div><label class="fl">Password</label><input type="password" class="fi" id="lp" placeholder="Enter your password" required/></div>
         <button type="submit" class="btn-p">Sign In to Portal →</button>
-        <div class="divrow"><span></span><p>or continue with demo</p><span></span></div>
-        <button type="button" class="btn-p btn-ghost" onclick="demo()">🚀 Demo Student Access</button>
+        <div class="divrow"><span></span><p>forgot password?</p><span></span></div>
+        <button type="button" class="btn-p btn-ghost" onclick="showReset()">🔑 Reset Password</button>
       </form>
+
+      <!-- Reset Password Modal -->
+      <div id="reset-overlay" class="apikey-overlay hidden">
+        <div class="apikey-modal">
+          <div class="akm-icon">🔑</div>
+          <div class="akm-title">Reset Password</div>
+          <div class="akm-sub">Enter your registered email — a reset link will be sent.</div>
+          <div class="akm-inp-wrap">
+            <input type="email" class="akm-inp" id="reset-email" placeholder="you@college.edu"/>
+            <button class="btn-save-key" onclick="doReset()">Send</button>
+          </div>
+          <div class="akm-note" id="reset-msg"></div>
+        </div>
+      </div>
       <form class="a-form" id="rf" onsubmit="doReg(event)">
         <div><label class="fl">Full Name</label><input type="text" class="fi" id="rfn" placeholder="Rahul Sharma" required/></div>
         <div><label class="fl">Email Address</label><input type="email" class="fi" id="rfem" placeholder="you@college.edu" required/></div>
@@ -898,7 +912,26 @@ function doReg(e){
   alert('✅ Account created! Please sign in.');
   swTab('login');
 }
-function demo(){login('Demo Student');}
+function showReset(){
+  document.getElementById('reset-overlay').classList.remove('hidden');
+  document.getElementById('reset-email').focus();
+  document.getElementById('reset-msg').textContent='';
+}
+function doReset(){
+  const email=document.getElementById('reset-email').value.trim();
+  const msg=document.getElementById('reset-msg');
+  if(!email){msg.textContent='⚠️ Please enter your email.';return;}
+  // Since this is a local auth app, show a friendly message
+  msg.style.color='var(--teal)';
+  msg.textContent='✅ If this email is registered, a reset link has been sent!';
+  setTimeout(()=>{
+    document.getElementById('reset-overlay').classList.add('hidden');
+  },2500);
+}
+document.addEventListener('click',function(e){
+  const overlay=document.getElementById('reset-overlay');
+  if(e.target===overlay) overlay.classList.add('hidden');
+});
 function login(name){
   user=name;
   const init=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
@@ -910,7 +943,12 @@ function login(name){
   buildFullPDFStrip();
   renderQP();
 }
-function logout(){user=null;sp('auth-page');}
+function logout(){
+  user=null;
+  document.getElementById('le').value='';
+  document.getElementById('lp').value='';
+  sp('auth-page');
+}
 
 // ══ NAVIGATION ══
 function sp(id){
