@@ -349,37 +349,20 @@ select.fi option{background:var(--card)}
         <button class="a-tab" onclick="swTab('register')">Register</button>
       </div>
       <form class="a-form on" id="lf" onsubmit="doLogin(event)">
-        <div><label class="fl">Email Address</label><input type="email" class="fi" id="le" placeholder="student@mu.ac.in" required/></div>
+        <div><label class="fl">Full Name or Email</label><input type="text" class="fi" id="le" placeholder="Rahul Sharma or you@college.edu" required/></div>
         <div><label class="fl">Password</label><input type="password" class="fi" id="lp" placeholder="Enter your password" required/></div>
         <button type="submit" class="btn-p">Sign In to Portal →</button>
         <div class="divrow"><span></span><p>or continue with demo</p><span></span></div>
         <button type="button" class="btn-p btn-ghost" onclick="demo()">🚀 Demo Student Access</button>
       </form>
       <form class="a-form" id="rf" onsubmit="doReg(event)">
-        <div class="frow">
-          <div><label class="fl">First Name</label><input type="text" class="fi" id="rfn" placeholder="Rahul" required/></div>
-          <div><label class="fl">Last Name</label><input type="text" class="fi" placeholder="Sharma" required/></div>
+        <div><label class="fl">Full Name</label><input type="text" class="fi" id="rfn" placeholder="Rahul Sharma" required/></div>
+        <div><label class="fl">Email Address</label><input type="email" class="fi" id="rfem" placeholder="you@college.edu" required/></div>
+        <div><label class="fl">Create Password</label><input type="password" class="fi" id="rfpw" placeholder="Min. 6 characters" minlength="6" required/></div>
+        <div>
+          <label class="fl">Captcha — Type the answer: <span id="cap-q" style="color:var(--accent);font-size:.95rem;font-weight:800;letter-spacing:1px"></span></label>
+          <input type="text" class="fi" id="cap-ans" placeholder="Your answer" required/>
         </div>
-        <div><label class="fl">Email Address</label><input type="email" class="fi" placeholder="you@college.edu" required/></div>
-        <div><label class="fl">Mobile Number</label><input type="tel" class="fi" placeholder="+91 98765 43210" required/></div>
-        <div class="frow">
-          <div><label class="fl">Course</label>
-            <select class="fi" required>
-              <option value="">Select Course</option>
-              <option>BScIT</option><option>BSc CS</option><option>BCA</option><option>MScIT</option>
-            </select>
-          </div>
-          <div><label class="fl">Semester</label>
-            <select class="fi" required>
-              <option value="">Semester</option>
-              <option>Sem 1 (FY)</option><option>Sem 2 (FY)</option>
-              <option>Sem 3 (SY)</option><option>Sem 4 (SY)</option>
-              <option>Sem 5 (TY)</option><option>Sem 6 (TY)</option>
-            </select>
-          </div>
-        </div>
-        <div><label class="fl">College Name</label><input type="text" class="fi" placeholder="e.g. Vidyalankar Institute of Technology" required/></div>
-        <div><label class="fl">Create Password</label><input type="password" class="fi" placeholder="Min. 6 characters" required/></div>
         <button type="submit" class="btn-p">Create Account →</button>
       </form>
     </div>
@@ -863,9 +846,58 @@ function swTab(t){
   document.querySelectorAll('.a-tab').forEach((el,i)=>el.classList.toggle('on',i===(t==='login'?0:1)));
   document.getElementById('lf').classList.toggle('on',t==='login');
   document.getElementById('rf').classList.toggle('on',t==='register');
+  if(t==='register') genCap();
 }
-function doLogin(e){e.preventDefault();login(document.getElementById('le').value.split('@')[0]||'Student');}
-function doReg(e){e.preventDefault();login(document.getElementById('rfn').value||'Student');}
+function doLogin(e){
+  e.preventDefault();
+  const val=document.getElementById('le').value.trim();
+  const pw=document.getElementById('lp').value;
+  // Get stored users
+  const users=JSON.parse(localStorage.getItem('mu_users')||'{}');
+  // Match by name or email (case-insensitive)
+  const key=Object.keys(users).find(k=>k.toLowerCase()===val.toLowerCase());
+  if(!key){
+    alert('❌ Account not found! Please register first.');
+    return;
+  }
+  if(users[key].password!==pw){
+    alert('❌ Wrong password! Please try again.');
+    return;
+  }
+  login(users[key].name);
+}
+// ── Captcha ──
+let capAnswer=0;
+function genCap(){
+  const a=Math.floor(Math.random()*9)+1;
+  const b=Math.floor(Math.random()*9)+1;
+  capAnswer=a+b;
+  const el=document.getElementById('cap-q');
+  if(el) el.textContent=`${a} + ${b} = ?`;
+}
+function doReg(e){
+  e.preventDefault();
+  const ans=parseInt(document.getElementById('cap-ans').value);
+  if(ans!==capAnswer){
+    alert('❌ Wrong captcha answer! Please try again.');
+    genCap();
+    document.getElementById('cap-ans').value='';
+    return;
+  }
+  const name=document.getElementById('rfn').value.trim();
+  const email=document.getElementById('rfem').value.trim();
+  const pw=document.getElementById('rfpw').value;
+  if(pw.length<6){alert('❌ Password must be at least 6 characters!');return;}
+  // Save user — store by both name and email as keys
+  const users=JSON.parse(localStorage.getItem('mu_users')||'{}');
+  if(users[name.toLowerCase()]){alert('❌ Name already registered! Please sign in.');return;}
+  const userData={name,email,password:pw};
+  users[name.toLowerCase()]=userData;
+  if(email) users[email.toLowerCase()]=userData;
+  localStorage.setItem('mu_users',JSON.stringify(users));
+  alert('✅ Account created! Please sign in.');
+  swTab('login');
+}
 function demo(){login('Demo Student');}
 function login(name){
   user=name;
