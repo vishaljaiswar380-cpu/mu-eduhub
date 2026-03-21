@@ -24,6 +24,22 @@ function rateLimit(req, res, next) {
   next();
 }
 
+// ── Markdown to HTML converter ─────────────────────────────────────────────
+function mdToHtml(text) {
+  return text
+    .replace(/^### (.+)$/gm, '<br><strong style="color:#60a5fa;font-size:1rem">$1</strong><br>')
+    .replace(/^## (.+)$/gm, '<br><strong style="color:#818cf8;font-size:1.05rem">$1</strong><br>')
+    .replace(/^# (.+)$/gm, '<br><strong style="color:#a78bfa;font-size:1.1rem">$1</strong><br>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code style="background:rgba(255,255,255,0.1);padding:1px 5px;border-radius:3px;font-family:monospace">$1</code>')
+    .replace(/```[\w]*\n?([\s\S]*?)```/g, '<div class="mc">$1</div>')
+    .replace(/^[-*] (.+)$/gm, '• $1<br>')
+    .replace(/^\d+\. (.+)$/gm, (m, p1, offset, str) => `• <strong>${m.match(/^\d+/)[0]}.</strong> ${p1}<br>`)
+    .replace(/\n{2,}/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
 // ── /api/chat endpoint ─────────────────────────────────────────────────────
 app.post('/api/chat', rateLimit, async (req, res) => {
   const { subject, message } = req.body;
@@ -34,20 +50,27 @@ app.post('/api/chat', rateLimit, async (req, res) => {
 
   const systemPrompt = `You are an AI Subject Instructor strictly for the University of Mumbai (MU). You ONLY teach "${subject}" as defined in the official University of Mumbai CBCS syllabus for BScIT / BSc CS students.
 
-STRICT RULES — NEVER BREAK THESE:
-1. Answer ONLY based on the University of Mumbai official syllabus for this subject. Do NOT use or reference syllabus content from any other university (not SPPU, not Delhi University, not Anna University, not any other).
-2. Always structure your answers around the MU syllabus Units (Unit 1, Unit 2, etc.) for this subject.
-3. If a topic is NOT part of the MU syllabus for "${subject}", explicitly say: "This topic is not part of the University of Mumbai syllabus for ${subject}."
-4. Every explanation must be exam-focused for Mumbai University semester exams (2 or 3 marks, 5 marks, 10 marks patterns).
-5. When answering, always mention which MU Unit the topic belongs to.
+STRICT RULES:
+1. Answer ONLY based on the University of Mumbai official syllabus. Do NOT use content from SPPU, Delhi University, Anna University or any other university.
+2. Always mention which MU Unit the topic belongs to (e.g. Unit 1, Unit 2).
+3. If a topic is NOT in the MU syllabus, say: "This topic is not part of the University of Mumbai syllabus for ${subject}."
+4. Format answers for MU exam patterns (2/3 marks, 5 marks, 10 marks).
 
-FORMAT (use plain HTML only):
-- <strong> for bold headings
-- <br> for line breaks
-- bullet points using •
-- <div class="mc">code here</div> for code samples
+FORMATTING RULES — VERY IMPORTANT:
+- Use ## for section headings (e.g. ## Definition, ## Key Points)
+- Use **text** for bold/important terms
+- Use bullet points with - for lists
+- Use numbered lists (1. 2. 3.) for steps
+- Use \`code\` for inline code
+- Use triple backticks for code blocks
+- Keep each point SHORT and CLEAR — one idea per line
+- Add a blank line between sections
 
-Always begin your response by stating the Unit name/number this topic falls under as per MU syllabus.`;
+Start with: ## 📘 Unit X: [Unit Name]
+Then: ## 📝 Definition
+Then: ## 🔑 Key Points
+Then (if applicable): ## 📊 Types / ## ⚙️ Working / ## ✅ Advantages / ## ❌ Disadvantages
+End with: ## 🎯 MU Exam Tips (mention what type of questions come from this topic)`;
 
   try {
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -69,7 +92,8 @@ Always begin your response by stating the Unit name/number this topic falls unde
     const data = await response.json();
     if (data.error) return res.status(400).json({ error: data.error.message });
 
-    const reply = data.choices?.[0]?.message?.content || 'Sorry, could not get a response.';
+    const raw = data.choices?.[0]?.message?.content || 'Sorry, could not get a response.';
+    const reply = mdToHtml(raw);
     res.json({ reply });
 
   } catch (err) {
