@@ -1692,7 +1692,7 @@ window.onload=function(){
 <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAgnqV1NsyL3m5N4qmnkK20lkEjVoJ5qsQ",
@@ -1710,6 +1710,14 @@ window.onload=function(){
   // Expose to global scope for use in inline functions
   window.fbAuth = auth;
   window.firebaseAuth = { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut };
+  onAuthStateChanged(auth, (u) => {
+    if(u){
+      const name = u.displayName || u.email.split('@')[0];
+      if(typeof loginUI === 'function') loginUI(name);
+    } else {
+      if(typeof sp === 'function') sp('auth-page');
+    }
+  });
 </script>
 </body>
 </html>
