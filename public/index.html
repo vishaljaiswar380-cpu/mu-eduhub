@@ -989,6 +989,7 @@ function sp(id){
   document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none'});
   const pg=document.getElementById(id);pg.style.display='flex';
   requestAnimationFrame(()=>pg.classList.add('active'));
+  if(id!=='auth-page') localStorage.setItem('mu_last_page',id);
 }
 
 // ══ CHATBOT ══
@@ -1709,11 +1710,14 @@ window.onload=function(){
   // Expose to global scope for use in inline functions
   window.fbAuth = auth;
   window.firebaseAuth = { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut };
-  onAuthStateChanged(auth, (u) => {
+onAuthStateChanged(auth, (u) => {
     if(u){
       const name = u.displayName || u.email.split('@')[0];
       if(typeof loginUI === 'function') loginUI(name);
+      const lastPage = localStorage.getItem('mu_last_page') || 'dashboard-page';
+      if(typeof sp === 'function') sp(lastPage);
     } else {
+      localStorage.removeItem('mu_last_page');
       if(typeof sp === 'function') sp('auth-page');
     }
   });
