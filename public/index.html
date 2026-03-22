@@ -349,10 +349,26 @@ select.fi option{background:var(--card)}
         <button class="a-tab" onclick="swTab('register')">Register</button>
       </div>
       <form class="a-form on" id="lf" onsubmit="doLogin(event)">
-        <div><label class="fl">Full Name or Email</label><input type="text" class="fi" id="le" placeholder="Rahul Sharma or you@college.edu" required/></div>
+        <div><label class="fl">Full Name or Email</label><input type="text" class="fi" id="le" placeholder="you@college.edu" required/></div>
         <div><label class="fl">Password</label><input type="password" class="fi" id="lp" placeholder="Enter your password" required/></div>
         <button type="submit" class="btn-p">Sign In to Portal →</button>
+        <div class="divrow"><span></span><p>forgot password?</p><span></span></div>
+        <button type="button" class="btn-p btn-ghost" onclick="showReset()">🔑 Reset Password</button>
       </form>
+
+      <!-- Reset Password Modal -->
+      <div id="reset-overlay" class="apikey-overlay hidden">
+        <div class="apikey-modal">
+          <div class="akm-icon">🔑</div>
+          <div class="akm-title">Reset Password</div>
+          <div class="akm-sub">Enter your registered email — Firebase will send a reset link.</div>
+          <div class="akm-inp-wrap">
+            <input type="email" class="akm-inp" id="reset-email" placeholder="you@college.edu"/>
+            <button class="btn-save-key" onclick="doReset()">Send</button>
+          </div>
+          <div class="akm-note" id="reset-msg" style="font-size:.85rem;margin-top:8px"></div>
+        </div>
+      </div>
       <form class="a-form" id="rf" onsubmit="doReg(event)">
         <div><label class="fl">Full Name</label><input type="text" class="fi" id="rfn" placeholder="Rahul Sharma" required/></div>
         <div><label class="fl">Email Address</label><input type="email" class="fi" id="rfem" placeholder="you@college.edu" required/></div>
