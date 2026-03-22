@@ -862,24 +862,7 @@ function swTab(t){
   document.getElementById('rf').classList.toggle('on',t==='register');
   if(t==='register') genCap();
 }
-function doLogin(e){
-  e.preventDefault();
-  const val=document.getElementById('le').value.trim();
-  const pw=document.getElementById('lp').value;
-  // Get stored users
-  const users=JSON.parse(localStorage.getItem('mu_users')||'{}');
-  // Match by name or email (case-insensitive)
-  const key=Object.keys(users).find(k=>k.toLowerCase()===val.toLowerCase());
-  if(!key){
-    alert('❌ Account not found! Please register first.');
-    return;
-  }
-  if(users[key].password!==pw){
-    alert('❌ Wrong password! Please try again.');
-    return;
-  }
-  login(users[key].name);
-}
+
 // ── Captcha ──
 let capAnswer=0;
 function genCap(){
@@ -889,29 +872,54 @@ function genCap(){
   const el=document.getElementById('cap-q');
   if(el) el.textContent=`${a} + ${b} = ?`;
 }
+
+// ── Firebase Auth functions ──
+function doLogin(e){
+  e.preventDefault();
+  const email=document.getElementById('le').value.trim();
+  const pw=document.getElementById('lp').value;
+  const btn=e.target.querySelector('button[type=submit]');
+  btn.textContent='Signing in...';btn.disabled=true;
+  firebaseAuth.signInWithEmailAndPassword(fbAuth,email,pw)
+    .then(cred=>{
+      const name=cred.user.displayName||email.split('@')[0];
+      loginUI(name);
+    })
+    .catch(err=>{
+      btn.textContent='Sign In to Portal →';btn.disabled=false;
+      if(err.code==='auth/user-not-found'||err.code==='auth/invalid-credential') alert('❌ Account not found! Please register first.');
+      else if(err.code==='auth/wrong-password') alert('❌ Wrong password!');
+      else alert('❌ '+err.message);
+    });
+}
+
 function doReg(e){
   e.preventDefault();
   const ans=parseInt(document.getElementById('cap-ans').value);
   if(ans!==capAnswer){
-    alert('❌ Wrong captcha answer! Please try again.');
-    genCap();
-    document.getElementById('cap-ans').value='';
-    return;
+    alert('❌ Wrong captcha answer!');
+    genCap();document.getElementById('cap-ans').value='';return;
   }
   const name=document.getElementById('rfn').value.trim();
   const email=document.getElementById('rfem').value.trim();
   const pw=document.getElementById('rfpw').value;
   if(pw.length<6){alert('❌ Password must be at least 6 characters!');return;}
-  // Save user — store by both name and email as keys
-  const users=JSON.parse(localStorage.getItem('mu_users')||'{}');
-  if(users[name.toLowerCase()]){alert('❌ Name already registered! Please sign in.');return;}
-  const userData={name,email,password:pw};
-  users[name.toLowerCase()]=userData;
-  if(email) users[email.toLowerCase()]=userData;
-  localStorage.setItem('mu_users',JSON.stringify(users));
-  alert('✅ Account created! Please sign in.');
-  swTab('login');
+  const btn=e.target.querySelector('button[type=submit]');
+  btn.textContent='Creating...';btn.disabled=true;
+  firebaseAuth.createUserWithEmailAndPassword(fbAuth,email,pw)
+    .then(cred=>firebaseAuth.updateProfile(cred.user,{displayName:name}))
+    .then(()=>{
+      alert('✅ Account created! Please sign in.');
+      btn.textContent='Create Account →';btn.disabled=false;
+      swTab('login');
+    })
+    .catch(err=>{
+      btn.textContent='Create Account →';btn.disabled=false;
+      if(err.code==='auth/email-already-in-use') alert('❌ Email already registered! Please sign in.');
+      else alert('❌ '+err.message);
+    });
 }
+
 function showReset(){
   document.getElementById('reset-overlay').classList.remove('hidden');
   document.getElementById('reset-email').focus();
@@ -921,18 +929,23 @@ function doReset(){
   const email=document.getElementById('reset-email').value.trim();
   const msg=document.getElementById('reset-msg');
   if(!email){msg.textContent='⚠️ Please enter your email.';return;}
-  // Since this is a local auth app, show a friendly message
-  msg.style.color='var(--teal)';
-  msg.textContent='✅ If this email is registered, a reset link has been sent!';
-  setTimeout(()=>{
-    document.getElementById('reset-overlay').classList.add('hidden');
-  },2500);
+  firebaseAuth.sendPasswordResetEmail(fbAuth,email)
+    .then(()=>{
+      msg.style.color='var(--teal)';
+      msg.textContent='✅ Reset email sent! Check your inbox.';
+      setTimeout(()=>document.getElementById('reset-overlay').classList.add('hidden'),3000);
+    })
+    .catch(()=>{
+      msg.style.color='var(--rose)';
+      msg.textContent='❌ Email not found. Please register first.';
+    });
 }
 document.addEventListener('click',function(e){
   const overlay=document.getElementById('reset-overlay');
   if(e.target===overlay) overlay.classList.add('hidden');
 });
-function login(name){
+
+function loginUI(name){
   user=name;
   const init=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
   document.getElementById('nav-av').textContent=init;
@@ -944,10 +957,12 @@ function login(name){
   renderQP();
 }
 function logout(){
-  user=null;
-  document.getElementById('le').value='';
-  document.getElementById('lp').value='';
-  sp('auth-page');
+  firebaseAuth.signOut(fbAuth).then(()=>{
+    user=null;
+    document.getElementById('le').value='';
+    document.getElementById('lp').value='';
+    sp('auth-page');
+  });
 }
 
 // ══ NAVIGATION ══
@@ -1635,6 +1650,29 @@ window.onload=function(){
   sp('auth-page');
   mcqUpdSubj();
 };
+</script>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAgnqV1NsyL3m5N4qmnkK20lkEjVoJ5qsQ",
+    authDomain: "mu-eduhub.firebaseapp.com",
+    projectId: "mu-eduhub",
+    storageBucket: "mu-eduhub.firebasestorage.app",
+    messagingSenderId: "477942622681",
+    appId: "1:477942622681:web:52f987f8d790a0ef20d1c8",
+    measurementId: "G-2YNSZ25SFM"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Expose to global scope for use in inline functions
+  window.fbAuth = auth;
+  window.firebaseAuth = { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, signOut };
 </script>
 </body>
 </html>
