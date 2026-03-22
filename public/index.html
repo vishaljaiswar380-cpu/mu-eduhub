@@ -21,6 +21,13 @@
   --sh:0 8px 32px rgba(0,0,0,.5);
   --tr:all .22s cubic-bezier(.4,0,.2,1);
 }
+body.light-mode{
+  --bg:#f0f4ff;--bg2:#e4eaf8;--bg3:#d8e2f5;
+  --card:#ffffff;--card2:#eef2fc;--card3:#dde6fa;
+  --border:#c5d0e8;--border2:#a8b8d8;
+  --text:#0f1e45;--text2:#3a5080;--text3:#8099c0;
+  --sh:0 8px 32px rgba(0,0,0,.12);
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
@@ -415,6 +422,7 @@ select.fi option{background:var(--card)}
         <div class="nav-un" id="nav-un">Student</div>
       </div>
       <button class="nav-out" onclick="logout()">Sign Out</button>
+      <button class="nav-out" onclick="toggleTheme()" id="theme-btn" style="font-size:1rem;padding:6px 10px">🌙</button>
     </div>
   </nav>
   <div class="dc">
@@ -1656,10 +1664,28 @@ function renderQP(){
   con.innerHTML=html;
 }
 
+// ══ THEME TOGGLE ══
+function toggleTheme(){
+  document.body.classList.toggle('light-mode');
+  const isLight=document.body.classList.contains('light-mode');
+  document.getElementById('theme-btn').textContent=isLight?'🌙':'☀️';
+  localStorage.setItem('mu_theme',isLight?'light':'dark');
+}
+// Apply saved theme on load
+(function(){
+  if(localStorage.getItem('mu_theme')==='light'){
+    document.body.classList.add('light-mode');
+  }
+})();
+
 // ══ INIT ══
 window.onload=function(){
   sp('auth-page');
   mcqUpdSubj();
+  if(localStorage.getItem('mu_theme')==='light'){
+    const btn=document.getElementById('theme-btn');
+    if(btn) btn.textContent='🌙';
+  }
 };
 </script>
 
