@@ -1,0 +1,13 @@
+INDEX.HTML INSTRUCTIONS:
+========================
+Your index.html is already on GitHub at:
+github.com/vishaljaiswar380-cpu/mu-eduhub/blob/main/public/index.html
+
+To get the updated version with expanded MCQ bank:
+1. Go to GitHub → public/index.html → Edit
+2. Find: // MCQ Bank
+         const MCQ = {
+3. Replace the entire MCQ object with content from MCQ_Updated.js file
+4. Commit changes
+
+The MCQ_Updated.js file is included separately with 10+ questions per subject.
